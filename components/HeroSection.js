@@ -5,6 +5,7 @@ import Parse from '../lib/parseConfig';
 
 export default function HeroSection() {
   const [heroData, setHeroData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchHero = async () => {
@@ -16,20 +17,28 @@ export default function HeroSection() {
         }
       } catch (error) {
         console.error('Erro ao buscar dados do Hero:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchHero();
   }, []);
 
-  const title = heroData?.get('title') ?? 'Ação Saúde';
-  const subtitle = heroData?.get('subtitle') ?? 'Eu faço o bem';
+  const title =
+    heroData?.get?.('title') ?? 'Ação Saúde';
+  const subtitle =
+    heroData?.get?.('subtitle') ?? 'Eu faço o bem';
   const description =
-    heroData?.get('description') ??
+    heroData?.get?.('description') ??
     'Levar acesso à saúde integralmente à quem precisa é nossa missão.';
-  const image =
-    heroData?.get('image') ??
-    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80';
+
+  // Se for Parse.File, usa .url(); se já for string, usa direto.
+  const imageField = heroData?.get?.('image');
+  const imageUrl =
+    typeof imageField === 'string'
+      ? imageField
+      : imageField?.url?.() ?? null; // <- sem fallback! não mostra nada até carregar
 
   return (
     <section className="bg-[#053980] text-white">
@@ -52,19 +61,28 @@ export default function HeroSection() {
               </a>
               <a
                 href="#atuacao"
-                className="border-2 border-white text-white px-6 py-3 rounded-md font-bold text-center hover:bg-white hover:bg-opacity-20 transition duration-300"
+                className="border-2 border-white text-white px-6 py-3 rounded-md font-bold text-center hover:bg-white/20 transition duration-300"
               >
                 <i className="fas fa-hands-helping mr-2" />
                 Conheça nossas ações
               </a>
             </div>
           </div>
+
           <div className="md:w-1/2 flex justify-center">
-            <img
-              src={image}
-              alt="Imagem principal"
-              className="rounded-lg shadow-2xl floating max-w-md w-full"
-            />
+            {/* Se quiser esqueleto enquanto carrega */}
+            {loading && (
+              <div className="h-[360px] md:h-[420px] w-full max-w-md rounded-lg bg-white/10 animate-pulse" />
+            )}
+
+            {/* Só renderiza a imagem quando vier do Back4App */}
+            {!loading && imageUrl && (
+              <img
+                src={imageUrl}
+                alt="Imagem principal"
+                className="rounded-lg shadow-2xl floating max-w-md w-full object-cover"
+              />
+            )}
           </div>
         </div>
       </div>
