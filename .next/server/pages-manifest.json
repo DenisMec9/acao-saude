@@ -1,8 +1,10 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/admin": "pages/admin.js",
-  "/fotos": "pages/fotos.js"
+  "/admin": "pages/admin.html",
+  "/fotos": "pages/fotos.html",
+  "/": "pages/index.html",
+  "/login": "pages/login.html",
+  "/_error": "pages/_error.js",
+  "/404": "pages/404.html"
 }
