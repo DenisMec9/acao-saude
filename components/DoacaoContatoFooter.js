@@ -127,9 +127,10 @@ export default function DoacaoContatoFooter() {
             <div className="mb-8 md:mb-0">
               <div className="flex-shrink-0 flex items-center">
                 <img
-                  src="imagens/Coração Laranja.png"
-                  alt="Ação Saúde Logo"
-                  className="h-12"
+                 src="/imagens/coracao-laranja.png" // caminho relativo à pasta public
+                   alt="Minha foto"
+                    width={50}
+                    height={50}
                 />
                 <span className="text-xl font-bold">Ação Saúde</span>
                 <span className="ml-2 text-sm text-[#ff7415]">Eu faço o bem</span>
