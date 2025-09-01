@@ -1,153 +1,215 @@
-// pages/admin.js
-'use client';
+import { useState, useEffect } from "react";
+import Parse from "parse/dist/parse.min.js";
 
-import { useState, useEffect } from 'react';
-import Parse from '../lib/parseConfig';
-import { useRouter } from 'next/router';
+export default function Admin() {
+  // Hero Content
+  const [hero, setHero] = useState({ titulo: "", subtitulo: "", descricao: "", imagem: "" });
+  const [loadingHero, setLoadingHero] = useState(false);
 
-export default function AdminPage() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [heroData, setHeroData] = useState(null);
-  const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
-  const [file, setFile] = useState(null);
+  // Fotos
+  const [fotos, setFotos] = useState([]);
+  const [novaFoto, setNovaFoto] = useState({ titulo: "", descricao: "", arquivo: null });
+  const [loadingFoto, setLoadingFoto] = useState(false);
 
-  // 🔐 Verifica se o usuário está logado
+  // Carregar dados ao abrir painel
   useEffect(() => {
-    const currentUser = Parse.User.current();
-    if (!currentUser) {
-      alert('Acesso negado. Faça login primeiro.');
-      router.push('/login');
-    } else {
-      fetchData();
+    fetchHero();
+    fetchFotos();
+  }, []);
+
+  // Buscar Hero
+  async function fetchHero() {
+    const HeroContent = Parse.Object.extend("HeroContent");
+    const query = new Parse.Query(HeroContent);
+    const result = await query.first();
+    if (result) {
+      setHero({
+        titulo: result.get("titulo"),
+        subtitulo: result.get("subtitulo"),
+        descricao: result.get("descricao"),
+        imagem: result.get("imagem")?.url() || "",
+      });
     }
-  }, [router]);
+  }
 
-  const fetchData = async () => {
+  // Buscar Fotos
+  async function fetchFotos() {
+    const Foto = Parse.Object.extend("Fotos");
+    const query = new Parse.Query(Foto);
+    query.descending("createdAt");
+    const results = await query.find();
+    setFotos(results);
+  }
+
+  // Salvar Hero
+  async function salvarHero() {
+    setLoadingHero(true);
     try {
-      const query = new Parse.Query('HeroContent');
-      const results = await query.find();
-      if (results.length > 0) {
-        const data = results[0];
-        setHeroData(data);
-        setTitle(data.get('title') || '');
-        setSubtitle(data.get('subtitle') || '');
-        setDescription(data.get('description') || '');
-        setImage(data.get('image') || '');
-      }
-    } catch (err) {
-      console.error('Erro ao carregar dados:', err);
-      alert('Erro ao carregar conteúdo.');
-    } finally {
-      setLoading(false);
-    }
-  };
+      const HeroContent = Parse.Object.extend("HeroContent");
+      const query = new Parse.Query(HeroContent);
+      let heroObj = await query.first();
 
-  const handleSave = async () => {
-    try {
-      const record = heroData || new Parse.Object('HeroContent');
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (!heroObj) heroObj = new HeroContent();
 
-      record.set('title', title);
-      record.set('subtitle', subtitle);
-      record.set('description', description);
+      heroObj.set("titulo", hero.titulo);
+      heroObj.set("subtitulo", hero.subtitulo);
+      heroObj.set("descricao", hero.descricao);
 
-      if (file) {
-        if (!allowedTypes.includes(file.type)) {
-          alert('Tipo de arquivo não permitido. Use JPG, PNG ou WEBP.');
-          return;
-        }
-
-        let finalFile = file;
-        if (file.name.endsWith('.jpeg')) {
-          finalFile = new File([file], file.name.replace(/\.jpeg$/, '.jpg'), {
-            type: 'image/jpeg',
-          });
-        }
-
-        const parseFile = new Parse.File(finalFile.name, finalFile);
+      if (hero.imagem instanceof File) {
+        const parseFile = new Parse.File(hero.imagem.name, hero.imagem);
         await parseFile.save();
-        record.set('image', parseFile.url());
-      } else if (image) {
-        record.set('image', image);
+        heroObj.set("imagem", parseFile);
       }
 
-      await record.save();
-      alert('Hero atualizado com sucesso!');
-    } catch (error) {
-      alert('Erro ao salvar: ' + (error.message || 'Erro desconhecido'));
+      await heroObj.save();
+      alert("Hero atualizado!");
+    } catch (err) {
+      console.error("Erro ao salvar Hero:", err);
+      alert("Erro ao salvar Hero.");
     }
-  };
+    setLoadingHero(false);
+  }
 
-  const handleLogout = () => {
-    Parse.User.logOut();
-    alert('Você saiu com sucesso.');
-    router.push('/login');
-  };
+  // Adicionar nova foto
+  async function adicionarFoto() {
+    if (!novaFoto.arquivo) {
+      alert("Selecione uma imagem!");
+      return;
+    }
 
-  if (loading) return <p className="text-center mt-10">Carregando...</p>;
+    setLoadingFoto(true);
+    try {
+      const Foto = Parse.Object.extend("Fotos");
+      const fotoObj = new Foto();
+
+      fotoObj.set("titulo", novaFoto.titulo);
+      fotoObj.set("descricao", novaFoto.descricao);
+
+      const parseFile = new Parse.File(novaFoto.arquivo.name, novaFoto.arquivo);
+      await parseFile.save();
+      fotoObj.set("imagem", parseFile);
+
+      await fotoObj.save();
+
+      setFotos([fotoObj, ...fotos]); // atualização otimista
+      setNovaFoto({ titulo: "", descricao: "", arquivo: null });
+      alert("Foto adicionada!");
+    } catch (err) {
+      console.error("Erro ao adicionar foto:", err);
+      alert("Erro ao adicionar foto.");
+    }
+    setLoadingFoto(false);
+  }
+
+  // Excluir foto
+  async function excluirFoto(id) {
+    if (!confirm("Tem certeza que deseja excluir esta foto?")) return;
+
+    try {
+      const Foto = Parse.Object.extend("Fotos");
+      const query = new Parse.Query(Foto);
+      const foto = await query.get(id);
+      await foto.destroy();
+
+      setFotos(fotos.filter((f) => f.id !== id)); // remove sem refazer fetch
+    } catch (err) {
+      console.error("Erro ao excluir foto:", err);
+      alert("Erro ao excluir foto.");
+    }
+  }
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-white min-h-screen">
-      <header className="flex justify-between items-center mb-8 border-b pb-4">
-        <h1 className="text-2xl font-bold text-gray-800">Painel Administrativo</h1>
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded transition"
-        >
-          Sair
-        </button>
-      </header>
-
-      <div className="space-y-6">
+    <div className="p-6 max-w-4xl mx-auto space-y-10">
+      {/* Hero */}
+      <section className="p-4 border rounded-lg shadow">
+        <h2 className="text-xl font-bold mb-4">Editar Hero</h2>
         <input
-          type="text"
-          className="border border-gray-300 rounded w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border p-2 w-full mb-2"
           placeholder="Título"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={hero.titulo}
+          onChange={(e) => setHero({ ...hero, titulo: e.target.value })}
         />
-
         <input
-          type="text"
-          className="border border-gray-300 rounded w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border p-2 w-full mb-2"
           placeholder="Subtítulo"
-          value={subtitle}
-          onChange={(e) => setSubtitle(e.target.value)}
+          value={hero.subtitulo}
+          onChange={(e) => setHero({ ...hero, subtitulo: e.target.value })}
         />
-
         <textarea
-          className="border border-gray-300 rounded w-full p-3 h-32 resize-vertical focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border p-2 w-full mb-2"
           placeholder="Descrição"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={hero.descricao}
+          onChange={(e) => setHero({ ...hero, descricao: e.target.value })}
         />
-
-        <input
-          type="text"
-          className="border border-gray-300 rounded w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="URL da imagem (opcional)"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-
         <input
           type="file"
-          accept="image/jpeg, image/jpg, image/png, image/webp"
-          className="mb-6"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          className="mb-2"
+          onChange={(e) => setHero({ ...hero, imagem: e.target.files[0] })}
         />
-
+        {hero.imagem && !(hero.imagem instanceof File) && (
+          <img src={hero.imagem} alt="preview hero" className="w-full h-40 object-cover mb-2 rounded" />
+        )}
         <button
-          onClick={handleSave}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded transition w-full"
+          onClick={salvarHero}
+          disabled={loadingHero}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
         >
-          Salvar alterações
+          {loadingHero ? "Salvando..." : "Salvar Hero"}
         </button>
-      </div>
+      </section>
+
+      {/* Galeria */}
+      <section className="p-4 border rounded-lg shadow">
+        <h2 className="text-xl font-bold mb-4">Gerenciar Galeria</h2>
+
+        {/* Form adicionar */}
+        <div className="space-y-2 mb-4">
+          <input
+            className="border p-2 w-full"
+            placeholder="Título"
+            value={novaFoto.titulo}
+            onChange={(e) => setNovaFoto({ ...novaFoto, titulo: e.target.value })}
+          />
+          <textarea
+            className="border p-2 w-full"
+            placeholder="Descrição"
+            value={novaFoto.descricao}
+            onChange={(e) => setNovaFoto({ ...novaFoto, descricao: e.target.value })}
+          />
+          <input
+            type="file"
+            onChange={(e) => setNovaFoto({ ...novaFoto, arquivo: e.target.files[0] })}
+          />
+          <button
+            onClick={adicionarFoto}
+            disabled={loadingFoto}
+            className="bg-green-600 text-white px-4 py-2 rounded"
+          >
+            {loadingFoto ? "Enviando..." : "Adicionar Foto"}
+          </button>
+        </div>
+
+        {/* Lista de fotos */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {fotos.map((foto) => (
+            <div key={foto.id} className="border rounded p-2 text-center">
+              <img
+                src={foto.get("imagem")?.url()}
+                alt={foto.get("titulo")}
+                className="w-full h-32 object-cover rounded"
+              />
+              <h3 className="font-semibold">{foto.get("titulo")}</h3>
+              <p className="text-sm">{foto.get("descricao")}</p>
+              <button
+                onClick={() => excluirFoto(foto.id)}
+                className="bg-red-600 text-white px-2 py-1 rounded mt-2"
+              >
+                Excluir
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
