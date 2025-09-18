@@ -1,17 +1,47 @@
 import { useEffect, useState } from "react";
-import Parse from "../lib/parseConfig"; // usa sua config, não o dist direto
+import Parse from "../lib/parseConfig";
+
+type FotoItem = {
+  id: string;
+  url: string;
+  titulo: string;
+  descricao: string;
+};
+
+// tipo mínimo para objetos do Parse que a gente usa aqui
+type PObj = {
+  id: string;
+  get: (key: string) => any;
+};
 
 export default function Galeria() {
-  const [fotos, setFotos] = useState<Parse.Object[]>([]);
+  const [fotos, setFotos] = useState<FotoItem[]>([]);
 
   useEffect(() => {
     async function fetchFotos() {
-      const FotoClass = Parse.Object.extend("Fotos");
-      const query = new Parse.Query(FotoClass);
-      query.descending("createdAt");
-      const results = await query.find();
-      setFotos(results);
+      try {
+        const GaleriaClass = Parse.Object.extend("Galeria");
+        const query = new Parse.Query(GaleriaClass);
+        query.descending("createdAt");
+
+        // força tipagem do retorno
+        const results = (await query.find()) as unknown as PObj[];
+
+        const mapped: FotoItem[] = results
+          .map((obj: PObj) => ({
+            id: obj.id,
+            url: obj.get("imagem")?.url?.() || "", // Parse.File -> url()
+            titulo: obj.get("titulo") || "",
+            descricao: obj.get("descricao") || "",
+          }))
+          .filter((f: FotoItem) => Boolean(f.url));
+
+        setFotos(mapped);
+      } catch (e) {
+        console.error("Erro ao carregar galeria:", e);
+      }
     }
+
     fetchFotos();
   }, []);
 
@@ -22,8 +52,8 @@ export default function Galeria() {
         {fotos.map((foto) => (
           <img
             key={foto.id}
-            src={foto.get("url") as string} // 👈 agora o TS entende
-            alt=""
+            src={foto.url}
+            alt={foto.titulo || "Foto da galeria"}
             className="w-full h-48 object-cover rounded-lg shadow"
           />
         ))}
