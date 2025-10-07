@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import Parse from "../../lib/parseConfig";
-
+import Parse from 'parse';
 // utils -----------------
 function toBase64(file) {
   return new Promise((resolve, reject) => {
