@@ -1,1 +1,10 @@
-node_modules
+# Pastas do Next.js e Node
+/node_modules
+/.next
+
+# Arquivos de ambiente (contém senhas!)
+/.env.local
+
+# Logs e outros
+npm-debug.log
+*.log
