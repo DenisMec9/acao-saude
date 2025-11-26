@@ -1,0 +1,12 @@
+{
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "functions": {
+    "pages/login.js": {
+      "includeFiles": "lib/**"
+    }
+  }
+}   
