@@ -3,5 +3,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/admin": "pages/admin.js",
-  "/fotos": "pages/fotos.js"
+  "/fotos": "pages/fotos.js",
+  "/login": "pages/login.js"
 }

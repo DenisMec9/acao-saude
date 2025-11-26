@@ -2,18 +2,55 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState, useCallback } from 'react';
+import Parse from '../lib/parseConfig';
 
-type Foto = { id: string; url: string };
+type Foto = { 
+  id: string; 
+  url: string;
+  titulo: string;
+  descricao: string;
+};
+
+type PObj = {
+  id: string;
+  get: (key: string) => any;
+};
 
 export default function FotosPage() {
-  // Ajuste a quantidade conforme suas imagens em /public/imagens
-  const fotos: Foto[] = Array.from({ length: 87 }, (_, i) => {
-    const n = i + 1;
-    return { id: String(n), url: `/imagens/${n}.jpg` };
-  });
-
+  const [fotos, setFotos] = useState<Foto[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [current, setCurrent] = useState(0);
+
+  // BUSCAR FOTOS DO PARSE (não mais imagens estáticas)
+  useEffect(() => {
+    async function fetchFotos() {
+      try {
+        const GaleriaClass = Parse.Object.extend("Galeria");
+        const query = new Parse.Query(GaleriaClass);
+        query.descending("createdAt");
+
+        const results = (await query.find()) as unknown as PObj[];
+
+        const mapped: Foto[] = results
+          .map((obj: PObj) => ({
+            id: obj.id,
+            url: obj.get("imagem")?.url() || "",
+            titulo: obj.get("titulo") || "",
+            descricao: obj.get("descricao") || "",
+          }))
+          .filter((f: Foto) => Boolean(f.url));
+
+        setFotos(mapped);
+      } catch (e) {
+        console.error("Erro ao carregar galeria:", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFotos();
+  }, []);
 
   const open = useCallback((idx: number) => {
     setCurrent(idx);
@@ -46,6 +83,14 @@ export default function FotosPage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [isOpen, close, next, prev]);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-lg text-gray-600">Carregando galeria...</div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -75,25 +120,31 @@ export default function FotosPage() {
       {/* Grid estilo Instagram */}
       <main className="min-h-screen bg-gray-100 py-6 sm:py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            {fotos.map((foto, idx) => (
-              <button
-                key={foto.id}
-                onClick={() => open(idx)}
-                className="relative aspect-square overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow group"
-                aria-label={`Abrir foto ${idx + 1}`}
-              >
-                <Image
-                  src={foto.url}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  priority={idx < 6}
-                />
-              </button>
-            ))}
-          </div>
+          {fotos.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 text-lg">Nenhuma foto na galeria ainda.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+              {fotos.map((foto, idx) => (
+                <button
+                  key={foto.id}
+                  onClick={() => open(idx)}
+                  className="relative aspect-square overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow group"
+                  aria-label={`Abrir foto ${foto.titulo || idx + 1}`}
+                >
+                  <Image
+                    src={foto.url}
+                    alt={foto.titulo || `Foto ${idx + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    priority={idx < 6}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
@@ -103,9 +154,8 @@ export default function FotosPage() {
           className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
-          onClick={close} // clique no backdrop
+          onClick={close}
         >
-          {/* container para impedir fechar quando clicar na imagem/controles */}
           <div
             className="relative w-full max-w-6xl max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
@@ -138,12 +188,24 @@ export default function FotosPage() {
             {/* Imagem grande */}
             <img
               src={fotos[current].url}
-              alt=""
+              alt={fotos[current].titulo || `Foto ${current + 1}`}
               className="mx-auto max-h-[90vh] w-auto object-contain rounded"
             />
+            
+            {/* Informações da foto (opcional) */}
+            {(fotos[current].titulo || fotos[current].descricao) && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                {fotos[current].titulo && (
+                  <h3 className="font-semibold text-lg">{fotos[current].titulo}</h3>
+                )}
+                {fotos[current].descricao && (
+                  <p className="text-sm mt-1">{fotos[current].descricao}</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
     </>
   );
-}
+} 

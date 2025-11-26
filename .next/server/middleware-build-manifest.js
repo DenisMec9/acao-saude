@@ -1,15 +1,14 @@
 globalThis.__BUILD_MANIFEST = {
   "pages": {
     "/": [
-      "static/chunks/[root-of-the-server]__fd719819._.js",
+      "static/chunks/[root-of-the-server]__396d594a._.js",
       "static/chunks/node_modules_next_197ee675._.js",
       "static/chunks/node_modules_react_1cad9b0b._.js",
       "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
       "static/chunks/node_modules_react-dom_f14d0471._.js",
-      "static/chunks/node_modules_parse_dist_parse_min_e9a6054f.js",
       "static/chunks/node_modules_3bfdc6a4._.js",
       "static/chunks/pages_index_5771e187._.js",
-      "static/chunks/pages_index_a978ff53._.js"
+      "static/chunks/pages_index_358394c3._.js"
     ],
     "/_app": [
       "static/chunks/node_modules_next_0b19e6de._.js",
@@ -38,10 +37,22 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/node_modules_react_1cad9b0b._.js",
       "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
       "static/chunks/node_modules_react-dom_f14d0471._.js",
+      "static/chunks/node_modules_parse_dist_parse_min_e9a6054f.js",
       "static/chunks/node_modules_3bfdc6a4._.js",
-      "static/chunks/[root-of-the-server]__e8430c16._.js",
+      "static/chunks/[root-of-the-server]__11195b1a._.js",
       "static/chunks/pages_fotos_5771e187._.js",
-      "static/chunks/pages_fotos_285c6186._.js"
+      "static/chunks/pages_fotos_c4aaa289._.js"
+    ],
+    "/login": [
+      "static/chunks/node_modules_next_a166bb8c._.js",
+      "static/chunks/node_modules_react_1cad9b0b._.js",
+      "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
+      "static/chunks/node_modules_react-dom_f14d0471._.js",
+      "static/chunks/node_modules_parse_dist_parse_min_e9a6054f.js",
+      "static/chunks/node_modules_3bfdc6a4._.js",
+      "static/chunks/[root-of-the-server]__fe59aac6._.js",
+      "static/chunks/pages_login_5771e187._.js",
+      "static/chunks/pages_login_06c211d6._.js"
     ]
   },
   "devFiles": [],
