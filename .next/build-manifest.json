@@ -22,26 +22,15 @@
       "static/chunks/pages__app_3a65a730._.js"
     ],
     "/admin": [
-      "static/chunks/node_modules_next_a166bb8c._.js",
+      "static/chunks/_7350d883._.js",
+      "static/chunks/node_modules_next_18f5102a._.js",
       "static/chunks/node_modules_react_1cad9b0b._.js",
       "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
       "static/chunks/node_modules_react-dom_f14d0471._.js",
-      "static/chunks/node_modules_parse_dist_parse_min_e9a6054f.js",
       "static/chunks/node_modules_3bfdc6a4._.js",
-      "static/chunks/[root-of-the-server]__790d5964._.js",
+      "static/chunks/[root-of-the-server]__d4e24805._.js",
       "static/chunks/pages_admin_5771e187._.js",
-      "static/chunks/pages_admin_efcc56a6._.js"
-    ],
-    "/fotos": [
-      "static/chunks/node_modules_next_4e5d9e6c._.js",
-      "static/chunks/node_modules_react_1cad9b0b._.js",
-      "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
-      "static/chunks/node_modules_react-dom_f14d0471._.js",
-      "static/chunks/node_modules_parse_dist_parse_min_e9a6054f.js",
-      "static/chunks/node_modules_3bfdc6a4._.js",
-      "static/chunks/[root-of-the-server]__11195b1a._.js",
-      "static/chunks/pages_fotos_5771e187._.js",
-      "static/chunks/pages_fotos_c4aaa289._.js"
+      "static/chunks/pages_admin_5554f704._.js"
     ],
     "/login": [
       "static/chunks/node_modules_next_a166bb8c._.js",
