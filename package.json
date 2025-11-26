@@ -1,13 +1,14 @@
 {
   "name": "acao-saude-next",
   "version": "1.0.0",
-    "scripts": {
-  "dev": "next dev --turbo",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint"
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "lucide-react": "^0.516.0",
     "next": "15.3.0",
     "parse": "^3.4.4",
