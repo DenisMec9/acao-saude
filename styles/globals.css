@@ -35,3 +35,12 @@ body {
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
+.timeline-item:not(:last-child)::after {
+  content:'';
+  position:absolute;
+  left:52px;              /* <-- AQUI O AJUSTE */
+  top:32px;
+  height:calc(100% - 32px);
+  width:2px;
+  background:#ff7415;
+}

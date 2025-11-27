@@ -11,8 +11,8 @@ export default function Navbar() {
         <div className="flex justify-between h-20">
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center gap-3">
-              <Image src="/imagens/coracao-laranja.png" alt="Ação Saúde Logo" width={64} height={64} />
-              <Image src="/imagens/logo-laranja.png" alt="Logo" width={110} height={32} />
+              <Image src="/imagens/coracao-laranja.png" alt="Ação Saúde Logo" width={44} height={44} />
+              <Image src="/imagens/logo-laranja.png" alt="Logo" width={90} height={52} />
             </div>
           </div>
 

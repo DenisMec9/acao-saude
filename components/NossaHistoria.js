@@ -4,10 +4,12 @@ export default function NossaHistoria() {
       <h3 className="text-2xl font-bold text-center text-gray-800 mb-12">
         Nossa História
       </h3>
+
       <div className="relative">
+
         {/* Timeline Item 1 */}
-        <div className="timeline-item relative pl-16 pb-10">
-          <div className="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
+        <div className="timeline-item relative pl-24 pb-10">
+          <div className="absolute left-8 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
             <i className="fas fa-lightbulb text-xl" />
           </div>
           <h4 className="text-xl font-bold text-gray-800 mb-2">
@@ -21,8 +23,8 @@ export default function NossaHistoria() {
         </div>
 
         {/* Timeline Item 2 */}
-        <div className="timeline-item relative pl-16 pb-10">
-          <div className="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
+        <div className="timeline-item relative pl-24 pb-10">
+          <div className="absolute left-8 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
             <i className="fas fa-heartbeat text-xl" />
           </div>
           <h4 className="text-xl font-bold text-gray-800 mb-2">
@@ -36,8 +38,8 @@ export default function NossaHistoria() {
         </div>
 
         {/* Timeline Item 3 */}
-        <div className="timeline-item relative pl-16 pb-10">
-          <div className="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
+        <div className="timeline-item relative pl-24 pb-10">
+          <div className="absolute left-8 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
             <i className="fas fa-expand text-xl" />
           </div>
           <h4 className="text-xl font-bold text-gray-800 mb-2">Expansão</h4>
@@ -49,8 +51,8 @@ export default function NossaHistoria() {
         </div>
 
         {/* Timeline Item 4 */}
-        <div className="timeline-item relative pl-16">
-          <div className="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
+        <div className="timeline-item relative pl-24">
+          <div className="absolute left-8 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#ff7415] text-white">
             <i className="fas fa-globe text-xl" />
           </div>
           <h4 className="text-xl font-bold text-gray-800 mb-2">Hoje</h4>
@@ -60,6 +62,7 @@ export default function NossaHistoria() {
             e ações comunitárias.
           </p>
         </div>
+
       </div>
     </div>
   );
