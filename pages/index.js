@@ -1,5 +1,6 @@
+// pages/index.js
 import Head from 'next/head';
-import Parse from '../lib/parseConfig'; // Importe a configuração do Parse
+import Parse from '../lib/parseConfig';
 
 // Seus componentes
 import Navbar from '../components/Navbar';
@@ -9,11 +10,10 @@ import NossaHistoria from '../components/NossaHistoria';
 import AreasAtuacao from '../components/AreasAtuacao';
 import Galeria from '../components/Galeria';
 import DoacaoContatoFooter from '../components/DoacaoContatoFooter';
+import CursosHome from '../components/CursosHome'; // NOVO COMPONENTE
 
 // PARTE 1: O COMPONENTE DA PÁGINA
-// Esta função é o que o Next.js renderiza na tela.
-// Ela recebe os dados buscados pelo getStaticProps.
-export default function Home({ heroData, galeriaData }) {
+export default function Home({ heroData, galeriaData, cursosData }) {
   return (
     <>
       <Head>
@@ -35,7 +35,7 @@ export default function Home({ heroData, galeriaData }) {
               .pulse { animation: pulse 2s infinite; }
               @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
               .timeline-item:not(:last-child)::after {
-                content:'';position:absolute;left:24px;top:32px;height:calc(100% - 32px);width:2px;background:#ff7415;
+                content:'';position:absolute;left:52px;top:32px;height:calc(100% - 32px);width:2px;background:#ff7415;
               }
               .whatsapp-float{
                 position:fixed;width:60px;height:60px;bottom:40px;right:40px;background:#25d366;color:#fff;border-radius:50px;
@@ -53,6 +53,10 @@ export default function Home({ heroData, galeriaData }) {
       <QuemSomos />
       <NossaHistoria />
       <AreasAtuacao />
+      
+      {/* NOVA SEÇÃO: CURSOS NA PÁGINA PRINCIPAL */}
+      <CursosHome cursos={cursosData} />
+      
       <Galeria images={galeriaData} />
       <DoacaoContatoFooter />
     </>
@@ -60,7 +64,6 @@ export default function Home({ heroData, galeriaData }) {
 }
 
 // PARTE 2: FUNÇÃO DE BUSCA DE DADOS
-// Esta função roda NO SERVIDOR antes da página ser enviada para o navegador.
 export async function getStaticProps() {
   try {
     // Busca dados para a Hero Section
@@ -86,21 +89,44 @@ export async function getStaticProps() {
       description: item.get('descricao') || '',
     }));
 
+    // BUSCA DADOS PARA CURSOS (NOVO)
+    const CursosItem = Parse.Object.extend('Cursos');
+    const cursosQuery = new Parse.Query(CursosItem);
+    cursosQuery.equalTo("ativo", true);
+    cursosQuery.ascending("ordem");
+    cursosQuery.limit(3); // Mostra apenas 3 cursos na página inicial
+    const cursosObjs = await cursosQuery.find();
+    const cursosData = cursosObjs.map(item => ({
+      id: item.id,
+      titulo: item.get('titulo') || '',
+      descricao: item.get('descricao') || '',
+      imagem: item.get('imagem')?.url() || '',
+      vagas: item.get('vagas') || 0,
+      vagasDisponiveis: item.get('vagasDisponiveis') || 0,
+      dataInicio: item.get('dataInicio')?.toISOString() || '',
+      dataFim: item.get('dataFim')?.toISOString() || '',
+      local: item.get('local') || '',
+      duracao: item.get('duracao') || '',
+      requisitos: item.get('requisitos') || [],
+      investimento: item.get('investimento') || 0,
+    }));
+
     // Retorna os dados encontrados como props para o componente Home
     return {
       props: {
         heroData,
         galeriaData,
+        cursosData,
       },
-      revalidate: 60, // Tenta atualizar os dados a cada 60 segundos
+      revalidate: 60,
     };
   } catch (error) {
     console.error("Erro ao buscar dados no getStaticProps:", error);
-    // Em caso de erro, retorna dados vazios para a página não quebrar
     return { 
         props: { 
             heroData: null, 
-            galeriaData: [] 
+            galeriaData: [],
+            cursosData: [],
         } 
     };
   }

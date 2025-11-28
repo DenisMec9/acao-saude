@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 // Carrega os componentes admin apenas no cliente
 const HeroAdmin = dynamic(() => import('@/components/Admin/HeroAdmin'), { ssr: false });
 const GaleriaAdmin = dynamic(() => import('@/components/Admin/GaleriaAdmin'), { ssr: false });
+const CursosAdmin = dynamic(() => import('@/components/Admin/CursosAdmin'), { ssr: false });
 const DoacaoAdmin = dynamic(() => import('@/components/Admin/DoacaoAdmin'), { ssr: false });
 const ContatoAdmin = dynamic(() => import('@/components/Admin/ContatoAdmin'), { ssr: false });
 
@@ -35,6 +36,11 @@ export default function AdminPage() {
   const [isClient, setIsClient] = useState(false);
   const [activeTab, setActiveTab] = useState('hero');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [stats, setStats] = useState({
+    totalFotos: 0,
+    totalCursos: 0,
+    cursosAtivos: 0
+  });
 
   useEffect(() => {
     setIsClient(true);
@@ -45,6 +51,7 @@ export default function AdminPage() {
       
       if (currentUser) {
         setIsUserAuthenticated(true);
+        carregarEstatisticas();
       } else {
         router.push('/login');
       }
@@ -52,6 +59,34 @@ export default function AdminPage() {
 
     checkAuth();
   }, [router]);
+
+  const carregarEstatisticas = async () => {
+    try {
+      const Parse = (await import('../lib/parseConfig')).default;
+      
+      // Carregar estatísticas da galeria
+      const Galeria = Parse.Object.extend("Galeria");
+      const queryGaleria = new Parse.Query(Galeria);
+      const totalFotos = await queryGaleria.count();
+      
+      // Carregar estatísticas dos cursos
+      const Cursos = Parse.Object.extend("Cursos");
+      const queryCursos = new Parse.Query(Cursos);
+      const totalCursos = await queryCursos.count();
+      
+      const queryCursosAtivos = new Parse.Query(Cursos);
+      queryCursosAtivos.equalTo("ativo", true);
+      const cursosAtivos = await queryCursosAtivos.count();
+      
+      setStats({
+        totalFotos,
+        totalCursos,
+        cursosAtivos
+      });
+    } catch (error) {
+      console.error('Erro ao carregar estatísticas:', error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -67,6 +102,7 @@ export default function AdminPage() {
   const tabs = [
     { id: 'hero', name: 'Hero Section', icon: '🏠', component: <HeroAdmin /> },
     { id: 'galeria', name: 'Galeria', icon: '🖼️', component: <GaleriaAdmin /> },
+    { id: 'cursos', name: 'Cursos', icon: '📚', component: <CursosAdmin /> },
     { id: 'doacao', name: 'Doações', icon: '❤️', component: <DoacaoAdmin /> },
     { id: 'contato', name: 'Contato', icon: '📞', component: <ContatoAdmin /> },
   ];
@@ -121,12 +157,12 @@ export default function AdminPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs Navigation */}
         <div className="mb-8">
-          <div className="flex space-x-1 bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-gray-200">
+          <div className="flex space-x-1 bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-gray-200 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
+                className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'bg-white shadow-md text-orange-600 border border-orange-200'
                     : 'text-gray-600 hover:text-orange-700 hover:bg-orange-50'
@@ -173,19 +209,20 @@ export default function AdminPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Fotos na Galeria</p>
-                <p className="text-2xl font-bold text-gray-900">--</p>
+                <p className="text-2xl font-bold text-gray-900">{stats.totalFotos}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center space-x-3">
-              <div className="bg-orange-100 p-3 rounded-xl">
-                <span className="text-2xl text-orange-600">❤️</span>
+              <div className="bg-green-100 p-3 rounded-xl">
+                <span className="text-2xl text-green-600">📚</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Doações Recebidas</p>
-                <p className="text-2xl font-bold text-gray-900">--</p>
+                <p className="text-sm text-gray-500">Total de Cursos</p>
+                <p className="text-2xl font-bold text-gray-900">{stats.totalCursos}</p>
+                <p className="text-xs text-green-600">{stats.cursosAtivos} ativos</p>
               </div>
             </div>
           </div>
@@ -206,13 +243,21 @@ export default function AdminPage() {
         {/* Quick Actions */}
         <div className="mt-8 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Ações Rápidas</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <button 
               onClick={() => setActiveTab('galeria')}
               className="p-4 bg-blue-50 hover:bg-blue-100 rounded-xl border border-blue-200 transition-colors text-center"
             >
               <span className="text-2xl mb-2 block">📸</span>
-              <span className="text-blue-700 font-medium">Nova Foto</span>
+              <span className="text-blue-700 font-medium text-sm">Nova Foto</span>
+            </button>
+            
+            <button 
+              onClick={() => setActiveTab('cursos')}
+              className="p-4 bg-green-50 hover:bg-green-100 rounded-xl border border-green-200 transition-colors text-center"
+            >
+              <span className="text-2xl mb-2 block">📚</span>
+              <span className="text-green-700 font-medium text-sm">Novo Curso</span>
             </button>
             
             <button 
@@ -220,7 +265,7 @@ export default function AdminPage() {
               className="p-4 bg-orange-50 hover:bg-orange-100 rounded-xl border border-orange-200 transition-colors text-center"
             >
               <span className="text-2xl mb-2 block">💝</span>
-              <span className="text-orange-700 font-medium">Atualizar Doação</span>
+              <span className="text-orange-700 font-medium text-sm">Atualizar Doação</span>
             </button>
             
             <button 
@@ -228,7 +273,7 @@ export default function AdminPage() {
               className="p-4 bg-blue-50 hover:bg-blue-100 rounded-xl border border-blue-200 transition-colors text-center"
             >
               <span className="text-2xl mb-2 block">🎯</span>
-              <span className="text-blue-700 font-medium">Editar Hero</span>
+              <span className="text-blue-700 font-medium text-sm">Editar Hero</span>
             </button>
             
             <button 
@@ -236,7 +281,7 @@ export default function AdminPage() {
               className="p-4 bg-orange-50 hover:bg-orange-100 rounded-xl border border-orange-200 transition-colors text-center"
             >
               <span className="text-2xl mb-2 block">📞</span>
-              <span className="text-orange-700 font-medium">Contatos</span>
+              <span className="text-orange-700 font-medium text-sm">Contatos</span>
             </button>
           </div>
         </div>
