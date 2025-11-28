@@ -10,7 +10,7 @@ import NossaHistoria from '../components/NossaHistoria';
 import AreasAtuacao from '../components/AreasAtuacao';
 import Galeria from '../components/Galeria';
 import DoacaoContatoFooter from '../components/DoacaoContatoFooter';
-import CursosHome from '../components/CursosHome'; // NOVO COMPONENTE
+import CursosHome from '../components/CursosHome';
 
 // PARTE 1: O COMPONENTE DA PÁGINA
 export default function Home({ heroData, galeriaData, cursosData }) {
@@ -20,6 +20,7 @@ export default function Home({ heroData, galeriaData, cursosData }) {
         <title>AÇÃO SAÚDE - EU FAÇO O BEM</title>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/coracao-laranja.png" type="image/png" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -59,6 +60,16 @@ export default function Home({ heroData, galeriaData, cursosData }) {
       
       <Galeria images={galeriaData} />
       <DoacaoContatoFooter />
+
+      {/* WhatsApp Float Button */}
+      <a 
+        href="https://wa.me/5581987455207?text=Olá! Gostaria de mais informações sobre a Ação Saúde." 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="whatsapp-float"
+      >
+        <i className="fab fa-whatsapp"></i>
+      </a>
     </>
   );
 }
