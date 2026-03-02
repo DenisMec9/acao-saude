@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useEffect, useState, useCallback } from 'react';
 import Parse from '../lib/parseConfig';
 
-type Foto = { 
-  id: string; 
+type Foto = {
+  id: string;
   url: string;
   titulo: string;
   descricao: string;
@@ -107,7 +107,7 @@ export default function FotosPage() {
             aria-label="Voltar para a Home"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
             <span className="font-medium">Voltar</span>
@@ -125,22 +125,34 @@ export default function FotosPage() {
               <p className="text-gray-500 text-lg">Nenhuma foto na galeria ainda.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
               {fotos.map((foto, idx) => (
                 <button
                   key={foto.id}
                   onClick={() => open(idx)}
-                  className="relative aspect-square overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow group"
+                  className="group relative aspect-square sm:aspect-[4/5] md:aspect-square overflow-hidden rounded-2xl bg-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-orange-500/30"
                   aria-label={`Abrir foto ${foto.titulo || idx + 1}`}
                 >
                   <Image
                     src={foto.url}
                     alt={foto.titulo || `Foto ${idx + 1}`}
                     fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                     priority={idx < 6}
                   />
+
+                  {/* Overlay Hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 text-left">
+                    <h3 className="text-white font-bold text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      {foto.titulo || 'Momento Especial'}
+                    </h3>
+                    {foto.descricao && (
+                      <p className="text-gray-200 text-sm mt-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75 line-clamp-2">
+                        {foto.descricao}
+                      </p>
+                    )}
+                  </div>
                 </button>
               ))}
             </div>
@@ -191,7 +203,7 @@ export default function FotosPage() {
               alt={fotos[current].titulo || `Foto ${current + 1}`}
               className="mx-auto max-h-[90vh] w-auto object-contain rounded"
             />
-            
+
             {/* Informações da foto (opcional) */}
             {(fotos[current].titulo || fotos[current].descricao) && (
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">

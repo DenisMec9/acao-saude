@@ -31,28 +31,6 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/pages__error_5771e187._.js",
       "static/chunks/pages__error_2957213b._.js"
     ],
-    "/admin": [
-      "static/chunks/_b7a6d995._.js",
-      "static/chunks/node_modules_next_18f5102a._.js",
-      "static/chunks/node_modules_react_1cad9b0b._.js",
-      "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
-      "static/chunks/node_modules_react-dom_f14d0471._.js",
-      "static/chunks/node_modules_3bfdc6a4._.js",
-      "static/chunks/[root-of-the-server]__d4e24805._.js",
-      "static/chunks/pages_admin_5771e187._.js",
-      "static/chunks/pages_admin_1972937f._.js"
-    ],
-    "/cursos": [
-      "static/chunks/node_modules_next_5a31954c._.js",
-      "static/chunks/node_modules_react_1cad9b0b._.js",
-      "static/chunks/node_modules_react-dom_cjs_react-dom_development_ab7e073c.js",
-      "static/chunks/node_modules_react-dom_f14d0471._.js",
-      "static/chunks/node_modules_parse_dist_parse_min_e9a6054f.js",
-      "static/chunks/node_modules_3bfdc6a4._.js",
-      "static/chunks/[root-of-the-server]__7d3da995._.js",
-      "static/chunks/pages_cursos_5771e187._.js",
-      "static/chunks/pages_cursos_ea914869._.js"
-    ],
     "/fotos": [
       "static/chunks/node_modules_next_4e5d9e6c._.js",
       "static/chunks/node_modules_react_1cad9b0b._.js",

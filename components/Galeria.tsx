@@ -35,20 +35,30 @@ export default function Galeria({ images }: GaleriaProps) {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
               {displayedImages.map((image, index) => (
                 <div 
                   key={image.id} 
-                  className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                  className="group relative aspect-[4/3] sm:aspect-square md:aspect-[4/3] overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
                 >
-                  {/* Use Image do Next.js agora */}
                   <Image
                     src={image.url}
                     alt={image.title || `Foto ${index + 1}`}
-                    width={200}
-                    height={200}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  
+                  {/* Overlay gradiente com texto (aparece no hover) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <h3 className="text-white font-bold text-xl translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      {image.title || 'Ação Saúde'}
+                    </h3>
+                    {image.description && (
+                      <p className="text-gray-200 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75 line-clamp-2">
+                        {image.description}
+                      </p>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -56,9 +66,12 @@ export default function Galeria({ images }: GaleriaProps) {
             <div className="text-center">
               <Link 
                 href="/fotos" 
-                className="inline-block bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition font-semibold"
+                className="inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-xl hover:bg-orange-600 hover:-translate-y-1 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
               >
-                Ver Todas as Fotos ({images.length})
+                Ver Galeria Completa ({images.length} fotos)
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
               </Link>
             </div>
           </>
