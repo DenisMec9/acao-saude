@@ -6,41 +6,67 @@ import { useRouter } from 'next/router';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
       await Parse.User.logIn(username, password);
       alert('Login bem-sucedido!');
       router.push('/admin');
     } catch (error) {
       alert('Erro no login: ' + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="p-8 max-w-md mx-auto bg-white rounded-lg shadow mt-20">
-      <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
-      <input
-        type="text"
-        className="border border-gray-300 rounded w-full p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Usuário"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        className="border border-gray-300 rounded w-full p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button
-        onClick={handleLogin}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold w-full py-3 rounded transition"
-      >
-        Entrar
-      </button>
+    <div className="min-h-screen pt-24 pb-16 px-4">
+      <div className="max-w-md mx-auto surface-card rounded-3xl border border-slate-200/80 shadow-xl p-8 animate-fade-in">
+        <h2 className="section-title text-center mb-2">Área Administrativa</h2>
+        <p className="section-subtitle text-center mb-6">Acesse o painel com seu usuário autorizado.</p>
+
+        <form onSubmit={handleLogin} className="space-y-4" aria-busy={loading}>
+          <div>
+            <label htmlFor="login-username" className="admin-label">Usuário</label>
+            <input
+              id="login-username"
+              type="text"
+              className="admin-input"
+              placeholder="Digite seu usuário"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              autoComplete="username"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="login-password" className="admin-label">Senha</label>
+            <input
+              id="login-password"
+              type="password"
+              className="admin-input"
+              placeholder="Digite sua senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="admin-btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Entrando...' : 'Entrar'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

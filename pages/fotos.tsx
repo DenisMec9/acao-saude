@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Parse from '../lib/parseConfig';
+import Navbar from '../components/Navbar';
 
 type Foto = {
   id: string;
@@ -85,8 +86,20 @@ export default function FotosPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-lg text-gray-600">Carregando galeria...</div>
+      <div className="min-h-screen pt-24">
+        <Navbar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center animate-fade-in">
+            <h1 className="section-title mb-4">Nossa Galeria</h1>
+            <div className="section-divider mb-5" />
+            <p className="section-subtitle">Registros reais das ações que acontecem no território.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
+              <div key={item} className="aspect-square rounded-2xl skeleton" />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -98,31 +111,19 @@ export default function FotosPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* Top bar */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b">
-        <div className="max-w-7xl mx-auto h-14 px-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-700 hover:text-orange-500 transition"
-            aria-label="Voltar para a Home"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-            <span className="font-medium">Voltar</span>
-          </Link>
-          <h1 className="text-lg font-semibold">Galeria</h1>
-          <span className="w-[68px]" aria-hidden="true"></span>
-        </div>
-      </header>
+      <Navbar />
 
-      {/* Grid estilo Instagram */}
-      <main className="min-h-screen bg-gray-100 py-6 sm:py-10">
-        <div className="max-w-7xl mx-auto px-4">
+      <main className="min-h-screen pt-24 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 animate-fade-in">
+            <h1 className="section-title mb-4">Nossa Galeria</h1>
+            <div className="section-divider mb-5" />
+            <p className="section-subtitle">Confira os momentos especiais das nossas ações e projetos sociais.</p>
+          </div>
+
           {fotos.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-gray-500 text-lg">Nenhuma foto na galeria ainda.</p>
+            <div className="surface-card rounded-2xl text-center py-20">
+              <p className="text-slate-500 text-lg">Nenhuma foto na galeria ainda.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -160,7 +161,6 @@ export default function FotosPage() {
         </div>
       </main>
 
-      {/* Lightbox */}
       {isOpen && fotos[current] && (
         <div
           className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
@@ -175,26 +175,26 @@ export default function FotosPage() {
             {/* Botão fechar */}
             <button
               onClick={close}
-              className="absolute -top-10 right-0 text-white/90 hover:text-white text-3xl"
+              className="absolute -top-12 right-0 rounded-full p-2 text-white/90 hover:text-white hover:bg-white/10 transition"
               aria-label="Fechar"
             >
-              ×
+              <X size={26} />
             </button>
 
             {/* Setas */}
             <button
               onClick={prev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 p-3 text-white/90 hover:text-white"
+              className="absolute left-0 top-1/2 -translate-y-1/2 p-3 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition"
               aria-label="Anterior"
             >
-              ‹
+              <ChevronLeft size={28} />
             </button>
             <button
               onClick={next}
-              className="absolute right-0 top-1/2 -translate-y-1/2 p-3 text-white/90 hover:text-white"
+              className="absolute right-0 top-1/2 -translate-y-1/2 p-3 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition"
               aria-label="Próxima"
             >
-              ›
+              <ChevronRight size={28} />
             </button>
 
             {/* Imagem grande */}

@@ -7,11 +7,26 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
+        sans: ['var(--font-manrope)', 'sans-serif'],
+        display: ['var(--font-sora)', 'sans-serif'],
       },
       colors: {
-        azulInstitucional: '#003b87',
-        laranjaInstitucional: '#f97316', // opcional, tom do botão
+        brand: {
+          primary: '#053980',
+          primaryStrong: '#032a5f',
+          accent: '#ff7415',
+          accentStrong: '#e5670d',
+        },
+        azulInstitucional: '#053980',
+        laranjaInstitucional: '#ff7415',
+      },
+      borderRadius: {
+        xl2: '1rem',
+        xl3: '1.25rem',
+      },
+      boxShadow: {
+        soft: '0 10px 30px rgba(15, 23, 42, 0.08)',
+        lift: '0 16px 34px rgba(15, 23, 42, 0.14)',
       },
     },
   },

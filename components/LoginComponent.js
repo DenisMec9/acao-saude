@@ -34,39 +34,44 @@ export default function LoginComponent() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login Admin</h2>
+    <div className="min-h-screen flex items-center justify-center px-4 py-10">
+      <div className="max-w-md w-full surface-card rounded-3xl border border-slate-200/80 p-8 shadow-xl">
+        <h2 className="section-title text-center mb-2">Login Admin</h2>
+        <p className="section-subtitle text-center mb-6">Entre para gerenciar o conteúdo do site.</p>
         
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl mb-4" role="alert">
             {error}
           </div>
         )}
         
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} aria-busy={loading}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label htmlFor="admin-user" className="admin-label">
               Usuário
             </label>
             <input
+              id="admin-user"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="admin-input"
+              autoComplete="username"
               required
             />
           </div>
           
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label htmlFor="admin-password" className="admin-label">
               Senha
             </label>
             <input
+              id="admin-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="admin-input"
+              autoComplete="current-password"
               required
             />
           </div>
@@ -74,7 +79,7 @@ export default function LoginComponent() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 disabled:bg-gray-400"
+            className="admin-btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>

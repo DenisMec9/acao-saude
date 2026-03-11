@@ -124,50 +124,72 @@ export default function HeroAdmin() {
 
   // --- Interface ---
   return (
-    <div className="space-y-3">
-      <h2 className="text-xl font-bold mb-2">Editar Hero</h2>
+    <div className="admin-card space-y-4 animate-fade-in">
+      <div>
+        <h2 className="admin-title">Editar Hero</h2>
+        <p className="admin-subtitle">Atualize título, descrição e imagem principal da home.</p>
+      </div>
 
-      <input
-        className="border p-2 w-full"
-        placeholder="Título"
-        value={hero.titulo}
-        onChange={(e) => setHero({ ...hero, titulo: e.target.value })}
-      />
+      <div>
+        <label htmlFor="hero-titulo" className="admin-label">Título</label>
+        <input
+          id="hero-titulo"
+          className="admin-input"
+          placeholder="Título"
+          value={hero.titulo}
+          onChange={(e) => setHero({ ...hero, titulo: e.target.value })}
+        />
+      </div>
 
-      <input
-        className="border p-2 w-full"
-        placeholder="Subtítulo"
-        value={hero.subtitulo}
-        onChange={(e) => setHero({ ...hero, subtitulo: e.target.value })}
-      />
+      <div>
+        <label htmlFor="hero-subtitulo" className="admin-label">Subtítulo</label>
+        <input
+          id="hero-subtitulo"
+          className="admin-input"
+          placeholder="Subtítulo"
+          value={hero.subtitulo}
+          onChange={(e) => setHero({ ...hero, subtitulo: e.target.value })}
+        />
+      </div>
 
-      <textarea
-        className="border p-2 w-full"
-        placeholder="Descrição"
-        value={hero.descricao}
-        onChange={(e) => setHero({ ...hero, descricao: e.target.value })}
-      />
+      <div>
+        <label htmlFor="hero-descricao" className="admin-label">Descrição</label>
+        <textarea
+          id="hero-descricao"
+          className="admin-textarea"
+          placeholder="Descrição"
+          value={hero.descricao}
+          onChange={(e) => setHero({ ...hero, descricao: e.target.value })}
+        />
+      </div>
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) =>
-          setHero({ ...hero, imagem: e.target.files?.[0] || "" })
-        }
-      />
+      <div>
+        <label htmlFor="hero-imagem" className="admin-label">Imagem principal</label>
+        <input
+          id="hero-imagem"
+          type="file"
+          accept="image/*"
+          className="admin-input"
+          onChange={(e) =>
+            setHero({ ...hero, imagem: e.target.files?.[0] || "" })
+          }
+        />
+      </div>
 
       {hero.imagem && !(hero.imagem instanceof File) && (
         <img
           src={hero.imagem}
           alt="Preview da imagem"
-          className="w-full h-40 object-cover rounded mt-2 shadow"
+          className="w-full h-40 object-cover rounded-xl mt-2 shadow"
         />
       )}
 
       <button
+        type="button"
         onClick={salvarHero}
         disabled={loadingHero}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        className="admin-btn-primary"
+        aria-busy={loadingHero}
       >
         {loadingHero ? "Salvando..." : "Salvar Hero"}
       </button>

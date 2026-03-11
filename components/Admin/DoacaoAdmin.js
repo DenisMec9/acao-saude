@@ -58,17 +58,35 @@ export default function DoacaoAdmin() {
   };
 
   return (
-    <div className="space-y-3">
-      <h2 className="text-xl font-bold mb-2">Editar Seção Doação</h2>
-      <input className="border p-2 w-full" placeholder="Título" value={doacao.titulo} onChange={e => setDoacao({ ...doacao, titulo: e.target.value })}/>
-      <textarea className="border p-2 w-full" placeholder="Descrição" value={doacao.descricao} onChange={e => setDoacao({ ...doacao, descricao: e.target.value })}/>
-      <input className="border p-2 w-full" placeholder="Banco" value={doacao.banco} onChange={e => setDoacao({ ...doacao, banco: e.target.value })}/>
-      <input className="border p-2 w-full" placeholder="Tipo de Doação" value={doacao.tipoDoacao} onChange={e => setDoacao({ ...doacao, tipoDoacao: e.target.value })}/>
-      <input type="file" onChange={e => setDoacao({ ...doacao, imagem: e.target.files[0] })}/>
+    <div className="admin-card space-y-4 animate-fade-in">
+      <div>
+        <h2 className="admin-title">Editar Seção Doação</h2>
+        <p className="admin-subtitle">Atualize informações bancárias e conteúdo de apoio da página.</p>
+      </div>
+      <div>
+        <label htmlFor="doacao-titulo" className="admin-label">Título</label>
+        <input id="doacao-titulo" className="admin-input" placeholder="Título" value={doacao.titulo} onChange={e => setDoacao({ ...doacao, titulo: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="doacao-descricao" className="admin-label">Descrição</label>
+        <textarea id="doacao-descricao" className="admin-textarea" placeholder="Descrição" value={doacao.descricao} onChange={e => setDoacao({ ...doacao, descricao: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="doacao-banco" className="admin-label">Banco</label>
+        <input id="doacao-banco" className="admin-input" placeholder="Banco" value={doacao.banco} onChange={e => setDoacao({ ...doacao, banco: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="doacao-tipo" className="admin-label">Tipo de Doação</label>
+        <input id="doacao-tipo" className="admin-input" placeholder="Tipo de Doação" value={doacao.tipoDoacao} onChange={e => setDoacao({ ...doacao, tipoDoacao: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="doacao-imagem" className="admin-label">Imagem da seção</label>
+        <input id="doacao-imagem" className="admin-input" type="file" onChange={e => setDoacao({ ...doacao, imagem: e.target.files[0] })}/>
+      </div>
       {doacao.imagem && !(doacao.imagem instanceof File) && (
-        <img src={doacao.imagem} alt="preview doação" className="w-full h-32 object-cover rounded mt-2"/>
+        <img src={doacao.imagem} alt="preview doação" className="w-full h-32 object-cover rounded-xl mt-2"/>
       )}
-      <button onClick={salvarDoacao} disabled={loadingDoacao} className="bg-yellow-600 text-white px-4 py-2 rounded">
+      <button type="button" onClick={salvarDoacao} disabled={loadingDoacao} className="admin-btn-accent" aria-busy={loadingDoacao}>
         {loadingDoacao ? "Salvando..." : "Salvar Doação"}
       </button>
     </div>

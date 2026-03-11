@@ -53,14 +53,32 @@ export default function ContatoAdmin() {
   };
 
   return (
-    <div className="space-y-3">
-      <h2 className="text-xl font-bold mb-2">Editar Seção Contato</h2>
-      <input className="border p-2 w-full" placeholder="Título" value={contato.titulo} onChange={e => setContato({ ...contato, titulo: e.target.value })}/>
-      <textarea className="border p-2 w-full" placeholder="Descrição" value={contato.descricao} onChange={e => setContato({ ...contato, descricao: e.target.value })}/>
-      <input className="border p-2 w-full" placeholder="Telefone" value={contato.telefone} onChange={e => setContato({ ...contato, telefone: e.target.value })}/>
-      <input className="border p-2 w-full" placeholder="Email" value={contato.email} onChange={e => setContato({ ...contato, email: e.target.value })}/>
-      <input className="border p-2 w-full" placeholder="Endereço" value={contato.endereco} onChange={e => setContato({ ...contato, endereco: e.target.value })}/>
-      <button onClick={salvarContato} disabled={loadingContato} className="bg-purple-600 text-white px-4 py-2 rounded">
+    <div className="admin-card space-y-4 animate-fade-in">
+      <div>
+        <h2 className="admin-title">Editar Seção Contato</h2>
+        <p className="admin-subtitle">Centralize telefone, e-mail e endereço exibidos no site.</p>
+      </div>
+      <div>
+        <label htmlFor="contato-titulo" className="admin-label">Título</label>
+        <input id="contato-titulo" className="admin-input" placeholder="Título" value={contato.titulo} onChange={e => setContato({ ...contato, titulo: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="contato-descricao" className="admin-label">Descrição</label>
+        <textarea id="contato-descricao" className="admin-textarea" placeholder="Descrição" value={contato.descricao} onChange={e => setContato({ ...contato, descricao: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="contato-telefone" className="admin-label">Telefone</label>
+        <input id="contato-telefone" className="admin-input" placeholder="Telefone" value={contato.telefone} onChange={e => setContato({ ...contato, telefone: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="contato-email" className="admin-label">Email</label>
+        <input id="contato-email" className="admin-input" placeholder="Email" value={contato.email} onChange={e => setContato({ ...contato, email: e.target.value })}/>
+      </div>
+      <div>
+        <label htmlFor="contato-endereco" className="admin-label">Endereço</label>
+        <input id="contato-endereco" className="admin-input" placeholder="Endereço" value={contato.endereco} onChange={e => setContato({ ...contato, endereco: e.target.value })}/>
+      </div>
+      <button type="button" onClick={salvarContato} disabled={loadingContato} className="admin-btn-primary" aria-busy={loadingContato}>
         {loadingContato ? "Salvando..." : "Salvar Contato"}
       </button>
     </div>

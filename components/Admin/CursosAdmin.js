@@ -297,17 +297,18 @@ export default function CursosAdmin() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-lg font-semibold mb-4">
+    <div className="space-y-6 animate-fade-in">
+      <div className="admin-card">
+        <h3 className="admin-title mb-4">
           {editingId ? "Editar Curso" : "Adicionar Novo Curso"}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Título *</label>
+            <label htmlFor="curso-titulo" className="admin-label">Título *</label>
             <input
-              className="border p-2 w-full rounded"
+              id="curso-titulo"
+              className="admin-input"
               placeholder="Nome do curso"
               value={form.titulo}
               onChange={(e) => setForm({ ...form, titulo: e.target.value })}
@@ -315,11 +316,12 @@ export default function CursosAdmin() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Vagas Totais</label>
+            <label htmlFor="curso-vagas" className="admin-label">Vagas Totais</label>
             <input
+              id="curso-vagas"
               type="number"
               min="1"
-              className="border p-2 w-full rounded"
+              className="admin-input"
               value={form.vagas}
               onChange={(e) => setForm({ ...form, vagas: parseInt(e.target.value) || 0 })}
             />
@@ -327,9 +329,10 @@ export default function CursosAdmin() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Descrição</label>
+          <label htmlFor="curso-descricao" className="admin-label">Descrição</label>
           <textarea
-            className="border p-2 w-full rounded"
+            id="curso-descricao"
+            className="admin-textarea"
             rows="3"
             placeholder="Descrição completa do curso"
             value={form.descricao}
@@ -339,20 +342,22 @@ export default function CursosAdmin() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Data Início</label>
+            <label htmlFor="curso-data-inicio" className="admin-label">Data Início</label>
             <input
+              id="curso-data-inicio"
               type="date"
-              className="border p-2 w-full rounded"
+              className="admin-input"
               value={form.dataInicio}
               onChange={(e) => setForm({ ...form, dataInicio: e.target.value })}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Data Fim</label>
+            <label htmlFor="curso-data-fim" className="admin-label">Data Fim</label>
             <input
+              id="curso-data-fim"
               type="date"
-              className="border p-2 w-full rounded"
+              className="admin-input"
               value={form.dataFim}
               onChange={(e) => setForm({ ...form, dataFim: e.target.value })}
             />
@@ -361,9 +366,10 @@ export default function CursosAdmin() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Local</label>
+            <label htmlFor="curso-local" className="admin-label">Local</label>
             <input
-              className="border p-2 w-full rounded"
+              id="curso-local"
+              className="admin-input"
               placeholder="Local do curso"
               value={form.local}
               onChange={(e) => setForm({ ...form, local: e.target.value })}
@@ -371,9 +377,10 @@ export default function CursosAdmin() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Duração</label>
+            <label htmlFor="curso-duracao" className="admin-label">Duração</label>
             <input
-              className="border p-2 w-full rounded"
+              id="curso-duracao"
+              className="admin-input"
               placeholder="Ex: 40 horas, 2 meses"
               value={form.duracao}
               onChange={(e) => setForm({ ...form, duracao: e.target.value })}
@@ -382,9 +389,10 @@ export default function CursosAdmin() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Requisitos (um por linha)</label>
+          <label htmlFor="curso-requisitos" className="admin-label">Requisitos (um por linha)</label>
           <textarea
-            className="border p-2 w-full rounded"
+            id="curso-requisitos"
+            className="admin-textarea"
             rows="3"
             placeholder="Cada linha será um item da lista"
             value={form.requisitos}
@@ -394,22 +402,24 @@ export default function CursosAdmin() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Investimento (R$)</label>
+            <label htmlFor="curso-investimento" className="admin-label">Investimento (R$)</label>
             <input
+              id="curso-investimento"
               type="number"
               step="0.01"
               min="0"
-              className="border p-2 w-full rounded"
+              className="admin-input"
               value={form.investimento}
               onChange={(e) => setForm({ ...form, investimento: parseFloat(e.target.value) || 0 })}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Ordem de Exibição</label>
+            <label htmlFor="curso-ordem" className="admin-label">Ordem de Exibição</label>
             <input
+              id="curso-ordem"
               type="number"
-              className="border p-2 w-full rounded"
+              className="admin-input"
               value={form.ordem}
               onChange={(e) => setForm({ ...form, ordem: parseInt(e.target.value) || 0 })}
             />
@@ -417,12 +427,13 @@ export default function CursosAdmin() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Imagem</label>
+          <label htmlFor="curso-imagem" className="admin-label">Imagem</label>
           <input
+            id="curso-imagem"
             type="file"
             accept="image/*"
             onChange={(e) => setForm({ ...form, imagem: e.target.files?.[0] || null })}
-            className="border p-2 w-full rounded"
+            className="admin-input"
           />
         </div>
 
@@ -434,7 +445,7 @@ export default function CursosAdmin() {
             onChange={(e) => setForm({ ...form, ativo: e.target.checked })}
             className="mr-2"
           />
-          <label htmlFor="ativo" className="text-sm text-gray-700">
+          <label htmlFor="ativo" className="text-sm text-slate-700">
             Curso ativo (aparece no site)
           </label>
         </div>
@@ -443,7 +454,9 @@ export default function CursosAdmin() {
           <button
             onClick={salvarCurso}
             disabled={loading || !form.titulo}
-            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+            className="admin-btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+            type="button"
+            aria-busy={loading}
           >
             {loading ? "Salvando..." : editingId ? "Atualizar Curso" : "Criar Curso"}
           </button>
@@ -451,7 +464,8 @@ export default function CursosAdmin() {
           {editingId && (
             <button
               onClick={limparForm}
-              className="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition-colors"
+              className="admin-btn-neutral"
+              type="button"
             >
               Cancelar
             </button>
@@ -460,12 +474,12 @@ export default function CursosAdmin() {
       </div>
 
       {/* Lista de Cursos */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="admin-card">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-slate-800">
             Cursos Cadastrados ({cursos.length})
           </h3>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-slate-500">
             {cursos.filter(c => c.ativo).length} ativos • {cursos.filter(c => !c.ativo).length} inativos
           </div>
         </div>
@@ -475,14 +489,14 @@ export default function CursosAdmin() {
         ) : (
           <div className="space-y-4">
             {cursos.map((curso) => (
-              <div key={curso.id} className={`border rounded-lg p-4 ${!curso.ativo ? 'bg-gray-50 opacity-70' : ''}`}>
+              <div key={curso.id} className={`rounded-xl border border-slate-200 p-4 shadow-sm ${!curso.ativo ? 'bg-slate-50 opacity-80' : 'bg-white'}`}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4 flex-1">
                     {curso.imagem && (
                       <img
                         src={curso.imagem}
                         alt={curso.titulo}
-                        className="w-20 h-20 object-cover rounded"
+                        className="w-20 h-20 object-cover rounded-xl"
                       />
                     )}
                     
@@ -506,9 +520,9 @@ export default function CursosAdmin() {
                         </span>
                       </div>
                       
-                      <p className="text-gray-600 text-sm mb-2 line-clamp-2">{curso.descricao}</p>
+                      <p className="text-slate-600 text-sm mb-2 line-clamp-2">{curso.descricao}</p>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-500">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-slate-500">
                         <div>
                           <strong>Vagas:</strong> 
                           <input
@@ -517,7 +531,7 @@ export default function CursosAdmin() {
                             max={curso.vagas}
                             value={curso.vagasDisponiveis}
                             onChange={(e) => atualizarVagas(curso.id, parseInt(e.target.value) || 0)}
-                            className="ml-2 w-16 border rounded px-1 text-center"
+                            className="ml-2 w-16 rounded-md border border-slate-300 px-1 text-center"
                           /> / {curso.vagas}
                         </div>
                         <div><strong>Local:</strong> {curso.local || '-'}</div>
@@ -530,23 +544,26 @@ export default function CursosAdmin() {
                   <div className="flex flex-col space-y-2 ml-4">
                     <button
                       onClick={() => editarCurso(curso)}
-                      className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors"
+                      className="admin-btn-accent text-sm"
+                      type="button"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => toggleAtivo(curso.id, curso.ativo)}
-                      className={`px-3 py-1 rounded text-sm transition-colors ${
+                      className={`px-3 py-1 rounded-lg text-sm text-white transition-colors ${
                         curso.ativo 
-                          ? 'bg-yellow-600 text-white hover:bg-yellow-700' 
-                          : 'bg-green-600 text-white hover:bg-green-700'
+                          ? 'bg-amber-600 hover:bg-amber-700' 
+                          : 'bg-emerald-600 hover:bg-emerald-700'
                       }`}
+                      type="button"
                     >
                       {curso.ativo ? 'Desativar' : 'Ativar'}
                     </button>
                     <button
                       onClick={() => excluirCurso(curso.id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition-colors"
+                      className="admin-btn-danger text-sm"
+                      type="button"
                     >
                       Excluir
                     </button>

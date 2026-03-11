@@ -1,13 +1,9 @@
 // components/CursosHome.js
 import Link from 'next/link';
 import Image from 'next/image';
+import { ArrowRight, BadgeDollarSign, Clock3 } from 'lucide-react';
 
 export default function CursosHome({ cursos }) {
-  const formatDate = (dateString) => {
-    if (!dateString) return "A definir";
-    return new Date(dateString).toLocaleDateString('pt-BR');
-  };
-
   // Mostra apenas cursos ativos com vagas disponíveis
   const cursosAtivos = cursos.filter(curso => curso.vagasDisponiveis > 0);
 
@@ -16,13 +12,14 @@ export default function CursosHome({ cursos }) {
   }
 
   return (
-    <section id="cursos" className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="cursos" className="py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+          <h2 className="section-title mb-4">
             Nossos Cursos
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="section-divider mb-5" />
+          <p className="section-subtitle">
             Capacitação profissional e oportunidades de desenvolvimento
           </p>
         </div>
@@ -31,7 +28,7 @@ export default function CursosHome({ cursos }) {
           {cursosAtivos.slice(0, 3).map((curso) => (
             <div
               key={curso.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 curso-card"
+              className="surface-card rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 curso-card"
             >
               {curso.imagem && (
                 <div className="relative h-48">
@@ -46,7 +43,7 @@ export default function CursosHome({ cursos }) {
               
               <div className="p-6">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-gray-900">
+                  <h3 className="text-xl font-bold text-slate-900">
                     {curso.titulo}
                   </h3>
                   <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
@@ -55,21 +52,21 @@ export default function CursosHome({ cursos }) {
                 </div>
 
                 {curso.descricao && (
-                  <p className="text-gray-600 mb-4 line-clamp-2">
+                  <p className="text-slate-600 mb-4 line-clamp-2">
                     {curso.descricao}
                   </p>
                 )}
 
-                <div className="space-y-2 mb-4 text-sm text-gray-500">
+                <div className="space-y-2 mb-4 text-sm text-slate-600">
                   {curso.duracao && (
-                    <div className="flex justify-between">
-                      <span>⏱️ Duração:</span>
-                      <span>{curso.duracao}</span>
+                    <div className="flex justify-between items-center gap-2">
+                      <span className="inline-flex items-center gap-2"><Clock3 size={15} /> Duração</span>
+                      <span className="font-semibold">{curso.duracao}</span>
                     </div>
                   )}
-                  <div className="flex justify-between">
-                    <span>💰 Investimento:</span>
-                    <span className="font-semibold">
+                  <div className="flex justify-between items-center gap-2">
+                    <span className="inline-flex items-center gap-2"><BadgeDollarSign size={15} /> Investimento</span>
+                    <span className="font-bold text-[#053980]">
                       {curso.investimento === 0 ? 'Gratuito' : `R$ ${curso.investimento.toFixed(2)}`}
                     </span>
                   </div>
@@ -77,8 +74,9 @@ export default function CursosHome({ cursos }) {
 
                 {/* BOTÃO ALTERADO: Agora leva para a página de cursos */}
                 <Link href="/cursos" className="block">
-                  <button className="w-full py-3 px-4 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors">
+                  <button className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors">
                     Saiba Mais
+                    <ArrowRight size={15} />
                   </button>
                 </Link>
               </div>
@@ -90,9 +88,10 @@ export default function CursosHome({ cursos }) {
         <div className="text-center">
           <Link 
             href="/cursos" 
-            className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
+            className="inline-flex items-center gap-2 bg-[#053980] text-white px-8 py-3 rounded-xl hover:bg-[#032a5f] transition font-semibold"
           >
             Ver Todos os Cursos ({cursosAtivos.length})
+            <ArrowRight size={16} />
           </Link>
         </div>
       </div>
