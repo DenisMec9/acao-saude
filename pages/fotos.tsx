@@ -88,7 +88,7 @@ export default function FotosPage() {
     return (
       <div className="min-h-screen pt-24">
         <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="mb-10 text-center animate-fade-in">
             <h1 className="section-title mb-4">Nossa Galeria</h1>
             <div className="section-divider mb-5" />
@@ -114,7 +114,7 @@ export default function FotosPage() {
       <Navbar />
 
       <main className="min-h-screen pt-24 pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="text-center mb-10 animate-fade-in">
             <h1 className="section-title mb-4">Nossa Galeria</h1>
             <div className="section-divider mb-5" />

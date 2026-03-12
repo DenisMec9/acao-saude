@@ -7,7 +7,7 @@ export default function HeroSection({ heroData }) {
       <div className="absolute -top-24 -left-10 h-60 w-60 rounded-full bg-orange-300/20 blur-3xl" />
       <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-blue-200/20 blur-3xl" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-20 md:py-28 relative">
         <div className="flex flex-col md:flex-row items-center md:space-x-10">
 
           {/* LADO ESQUERDO — TEXTO FIXO */}

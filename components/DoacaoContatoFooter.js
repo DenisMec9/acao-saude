@@ -6,7 +6,7 @@ export default function DoacaoContatoFooter() {
   return (
     <>
       <section id="doacao" className="py-20 bg-gradient-to-br from-[#032a5f] via-[#053980] to-[#0a4ca4] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="text-center mb-16">
             <h2 className="section-title text-white mb-4">Faça uma Doação</h2>
             <div className="section-divider" />
@@ -111,7 +111,7 @@ export default function DoacaoContatoFooter() {
       </a>
 
       <footer className="bg-slate-950 text-white py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="md:flex md:justify-between gap-10">
             <div className="mb-8 md:mb-0 max-w-sm">
               <div className="flex items-center gap-3 mb-3">

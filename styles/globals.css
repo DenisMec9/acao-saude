@@ -65,11 +65,14 @@
 }
     
 html {
+  font-size: 17px;
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--font-manrope), sans-serif;
+  font-family: var(--font-lexend), sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
   max-width: 100vw;
   overflow-x: hidden;
   background:
@@ -89,12 +92,12 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-sora), sans-serif;
+  font-family: var(--font-lexend), sans-serif;
   letter-spacing: -0.02em;
 }
 
 .section-title {
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(2rem, 3.3vw, 2.85rem);
   line-height: 1.1;
   color: var(--text-primary);
   font-weight: 800;
@@ -351,5 +354,11 @@ textarea:focus {
   .pulse,
   .skeleton {
     animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 17px;
   }
 }

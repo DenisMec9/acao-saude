@@ -1,7 +1,7 @@
 export default function QuemSomos() {
   return (
     <section id="quem-somos" className="py-20 bg-white/70">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         {/* Título */}
         <div className="text-center mb-16">
           <h2 className="section-title mb-4">
