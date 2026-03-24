@@ -17,41 +17,15 @@ type PObj = {
   get: (key: string) => any;
 };
 
-export default function FotosPage() {
-  const [fotos, setFotos] = useState<Foto[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function FotosPage({ fotos }: { fotos: Foto[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [current, setCurrent] = useState(0);
 
-  // BUSCAR FOTOS DO PARSE (não mais imagens estáticas)
-  useEffect(() => {
-    async function fetchFotos() {
-      try {
-        const GaleriaClass = Parse.Object.extend("Galeria");
-        const query = new Parse.Query(GaleriaClass);
-        query.descending("createdAt");
-
-        const results = (await query.find()) as unknown as PObj[];
-
-        const mapped: Foto[] = results
-          .map((obj: PObj) => ({
-            id: obj.id,
-            url: obj.get("imagem")?.url() || "",
-            titulo: obj.get("titulo") || "",
-            descricao: obj.get("descricao") || "",
-          }))
-          .filter((f: Foto) => Boolean(f.url));
-
-        setFotos(mapped);
-      } catch (e) {
-        console.error("Erro ao carregar galeria:", e);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchFotos();
-  }, []);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.acaosaude.org.br';
+  const pageUrl = `${siteUrl}/fotos`;
+  const seoTitle = 'Galeria de Fotos | Acao Saude';
+  const seoDescription =
+    'Veja registros das acoes, projetos e iniciativas da Acao Saude em diferentes comunidades.';
 
   const open = useCallback((idx: number) => {
     setCurrent(idx);
@@ -72,7 +46,7 @@ export default function FotosPage() {
     setCurrent((i) => (i - 1 + fotos.length) % fotos.length);
   }, [fotos.length]);
 
-  // Teclado: ESC fecha, ← → navega
+  // Teclado: ESC fecha, esquerda/direita navega
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -84,31 +58,20 @@ export default function FotosPage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [isOpen, close, next, prev]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen pt-24">
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="mb-10 text-center animate-fade-in">
-            <h1 className="section-title mb-4">Nossa Galeria</h1>
-            <div className="section-divider mb-5" />
-            <p className="section-subtitle">Registros reais das ações que acontecem no território.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
-              <div key={item} className="aspect-square rounded-2xl skeleton" />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <Head>
-        <title>Galeria de Fotos — Ação Saúde</title>
+        <title>{seoTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content={seoDescription} key="description" />
+        <meta name="robots" content="index,follow" key="robots" />
+        <link rel="canonical" href={pageUrl} key="canonical" />
+        <meta property="og:title" content={seoTitle} key="og:title" />
+        <meta property="og:description" content={seoDescription} key="og:description" />
+        <meta property="og:url" content={pageUrl} key="og:url" />
+        <meta property="og:type" content="website" key="og:type" />
+        <meta name="twitter:title" content={seoTitle} key="twitter:title" />
+        <meta name="twitter:description" content={seoDescription} key="twitter:description" />
       </Head>
 
       <Navbar />
@@ -118,7 +81,9 @@ export default function FotosPage() {
           <div className="text-center mb-10 animate-fade-in">
             <h1 className="section-title mb-4">Nossa Galeria</h1>
             <div className="section-divider mb-5" />
-            <p className="section-subtitle">Confira os momentos especiais das nossas ações e projetos sociais.</p>
+            <p className="section-subtitle">
+              Confira os momentos especiais das nossas acoes e projetos sociais.
+            </p>
           </div>
 
           {fotos.length === 0 ? (
@@ -168,11 +133,8 @@ export default function FotosPage() {
           aria-modal="true"
           onClick={close}
         >
-          <div
-            className="relative w-full max-w-6xl max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Botão fechar */}
+          <div className="relative w-full max-w-6xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+            {/* Botao fechar */}
             <button
               onClick={close}
               className="absolute -top-12 right-0 rounded-full p-2 text-white/90 hover:text-white hover:bg-white/10 transition"
@@ -192,7 +154,7 @@ export default function FotosPage() {
             <button
               onClick={next}
               className="absolute right-0 top-1/2 -translate-y-1/2 p-3 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition"
-              aria-label="Próxima"
+              aria-label="Proxima"
             >
               <ChevronRight size={28} />
             </button>
@@ -201,18 +163,16 @@ export default function FotosPage() {
             <img
               src={fotos[current].url}
               alt={fotos[current].titulo || `Foto ${current + 1}`}
+              width={1600}
+              height={1200}
               className="mx-auto max-h-[90vh] w-auto object-contain rounded"
             />
 
-            {/* Informações da foto (opcional) */}
+            {/* Informacoes da foto (opcional) */}
             {(fotos[current].titulo || fotos[current].descricao) && (
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
-                {fotos[current].titulo && (
-                  <h3 className="font-semibold text-lg">{fotos[current].titulo}</h3>
-                )}
-                {fotos[current].descricao && (
-                  <p className="text-sm mt-1">{fotos[current].descricao}</p>
-                )}
+                {fotos[current].titulo && <h3 className="font-semibold text-lg">{fotos[current].titulo}</h3>}
+                {fotos[current].descricao && <p className="text-sm mt-1">{fotos[current].descricao}</p>}
               </div>
             )}
           </div>
@@ -220,4 +180,33 @@ export default function FotosPage() {
       )}
     </>
   );
-} 
+}
+
+export async function getStaticProps() {
+  try {
+    const GaleriaClass = Parse.Object.extend('Galeria');
+    const query = new Parse.Query(GaleriaClass);
+    query.descending('createdAt');
+
+    const results = (await query.find()) as unknown as PObj[];
+    const fotos: Foto[] = results
+      .map((obj: PObj) => ({
+        id: obj.id,
+        url: obj.get('imagem')?.url() || '',
+        titulo: obj.get('titulo') || '',
+        descricao: obj.get('descricao') || '',
+      }))
+      .filter((f: Foto) => Boolean(f.url));
+
+    return {
+      props: { fotos },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error('Erro ao carregar galeria no getStaticProps:', error);
+    return {
+      props: { fotos: [] },
+      revalidate: 60,
+    };
+  }
+}
