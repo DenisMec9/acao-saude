@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Menu, X } from 'lucide-react';
 
@@ -33,23 +34,23 @@ export default function Navbar() {
               className="flex-shrink-0 flex items-center gap-3 transition-transform duration-300 hover:scale-[1.01]"
               aria-label="Pagina inicial Acao Saude"
             >
-              <img
+              <Image
                 src="/imagens/coracao-laranja.png"
                 alt="Acao Saude simbolo"
-                width="44"
-                height="34"
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
+                width={44}
+                height={34}
+                sizes="44px"
+                quality={60}
+                priority
               />
-              <img
+              <Image
                 src="/imagens/logo-laranja.png"
                 alt="Acao Saude"
-                width="90"
-                height="52"
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
+                width={90}
+                height={52}
+                sizes="90px"
+                quality={60}
+                priority
               />
             </Link>
           </div>

@@ -7,6 +7,14 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "browserslist": [
+    "chrome >= 109",
+    "edge >= 109",
+    "firefox >= 115",
+    "ios_saf >= 15.6",
+    "safari >= 15.6",
+    "not dead"
+  ],
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "lucide-react": "^0.516.0",

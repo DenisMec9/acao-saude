@@ -12,7 +12,7 @@ type GaleriaProps = {
 
 export default function Galeria({ images }: GaleriaProps) {
   const displayedImages = images.slice(0, 3);
-  const backgroundImage = displayedImages[0]?.url || "/imagens/foto.oq.jpg";
+  const backgroundImage = "/imagens/foto.oq.jpg";
 
   return (
     <section id="galeria" className="py-16">
