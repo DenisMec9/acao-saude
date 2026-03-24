@@ -6,7 +6,10 @@ export default function HeroSection({ heroData }) {
   return (
     <section className="hero-gradient text-white relative overflow-hidden">
       <div className="absolute -top-24 -left-10 h-60 w-60 rounded-full bg-orange-300/20 blur-3xl" />
-      <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-blue-200/20 blur-3xl" />
+      <div
+        className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-blue-200/20 blur-3xl"
+        aria-hidden="true"
+      />
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-20 md:py-28 relative">
         <div className="flex flex-col md:flex-row items-center md:space-x-10">
@@ -65,7 +68,9 @@ export default function HeroSection({ heroData }) {
                 height={960}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
-                className="rounded-2xl border border-white/25 shadow-2xl max-w-md w-full object-cover floating"
+                loading="eager"
+                fetchPriority="high"
+                className="rounded-2xl border border-white/25 shadow-2xl max-w-md w-full object-cover"
               />
             ) : (
               <div className="h-[360px] md:h-[420px] w-full max-w-md rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white/70">
