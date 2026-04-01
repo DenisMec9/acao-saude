@@ -1,7 +1,11 @@
 {
-  "/": "pages/index.js",
   "/_app": "pages/_app.js",
+  "/cursos": "pages/cursos.html",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/fotos": "pages/fotos.js"
+  "/login": "pages/login.html",
+  "/admin": "pages/admin.html",
+  "/": "pages/index.js",
+  "/fotos": "pages/fotos.js",
+  "/404": "pages/404.html"
 }

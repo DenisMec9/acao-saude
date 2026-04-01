@@ -8,7 +8,7 @@ export default function DoacaoAdmin() {
     banco: "",
     tipoDoacao: "",
     imagem: ""
-  });
+  }); // Todos os campos já estão corretos, mas mantenha a acentuação correta nos textos exibidos ao usuário nas telas e mensagens.
   const [loadingDoacao, setLoadingDoacao] = useState(false);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function DoacaoAdmin() {
           titulo: result.get("titulo"),
           descricao: result.get("descricao"),
           banco: result.get("banco"),
-          tipoDoacao: result.get("tipoDoacao"),
+          tipoDoacao: result.get("tipoDoação"),
           imagem: result.get("imagem")?.url() || ""
         });
       }

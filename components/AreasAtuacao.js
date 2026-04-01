@@ -57,7 +57,7 @@ export default function AreasAtuacao() {
     <section id="atuacao" className="py-20 bg-slate-100/70">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         <div className="text-center mb-16">
-          <h2 className="section-title mb-4">
+          <h2 className="section-title mb-4">Áreas de Atuação
             Áreas de Atuação
           </h2>
           <div className="section-divider" />

@@ -26,7 +26,7 @@ export default function CursosSection() {
           dataInicio: item.get("dataInicio")?.toISOString() || "",
           dataFim: item.get("dataFim")?.toISOString() || "",
           local: item.get("local") || "",
-          duracao: item.get("duracao") || "",
+          duracao: item.get("duração") || "",
           requisitos: item.get("requisitos") || [],
           investimento: item.get("investimento") || 0,
         }));

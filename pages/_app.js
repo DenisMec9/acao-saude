@@ -12,9 +12,9 @@ const lexend = Lexend({
 
 export default function App({ Component, pageProps }) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.acaosaude.org.br';
-  const defaultTitle = 'Acao Saude - Eu Faco o Bem';
+  const defaultTitle = 'Ação Saúde - Eu faço o bem';
   const defaultDescription =
-    'A Acao Saude promove projetos sociais, cuidado em saude e formacao para fortalecer comunidades.';
+    'A Ação Saúde promove projetos sociais, cuidado em saúde e formação para fortalecer comunidades.';
 
   return (
     <div className={lexend.variable}>
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
         <meta name="description" content={defaultDescription} key="description" />
         <meta name="robots" content="index,follow" key="robots" />
         <meta property="og:type" content="website" key="og:type" />
-        <meta property="og:site_name" content="Acao Saude" key="og:site_name" />
+        <meta property="og:site_name" content="Ação Saúde" key="og:site_name" />
         <meta property="og:title" content={defaultTitle} key="og:title" />
         <meta property="og:description" content={defaultDescription} key="og:description" />
         <meta property="og:url" content={siteUrl} key="og:url" />
