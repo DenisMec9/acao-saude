@@ -66,7 +66,7 @@ export default function Navbar() {
               onClick={() => handleNavigation('#atuacao')}
               className="text-slate-700 hover:text-[#ff7415] px-3 py-2 font-semibold transition-colors"
             >
-              AREAS DE ATUACAO
+              ÁREAS DE ATUAÇÃO
             </button>
             <Link href="/cursos" className="text-slate-700 hover:text-[#ff7415] px-3 py-2 font-semibold transition-colors">
               CURSOS
@@ -78,7 +78,7 @@ export default function Navbar() {
               onClick={() => handleNavigation('#doacao')}
               className="bg-[#ff7415] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#e5670d] hover:-translate-y-0.5 shadow-lg shadow-orange-200/70 transition"
             >
-              DOACAO
+              DOAÇÃO
             </button>
           </div>
 
@@ -107,7 +107,7 @@ export default function Navbar() {
               onClick={() => handleNavigation('#atuacao')}
               className="block w-full text-left px-3 py-2 text-slate-700 hover:text-[#ff7415] font-semibold"
             >
-              AREAS DE ATUACAO
+              ÁREAS DE ATUAÇÃO
             </button>
             <Link href="/cursos" className="block px-3 py-2 text-slate-700 hover:text-[#ff7415] font-semibold" onClick={() => setOpen(false)}>
               CURSOS
