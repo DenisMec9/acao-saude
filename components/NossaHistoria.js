@@ -1,56 +1,58 @@
-import { Lightbulb, HeartPulse, Expand, Globe } from 'lucide-react';
+import { Lightbulb, HeartPulse, Expand, Globe } from "lucide-react";
 
 export default function NossaHistoria() {
   const timelineItems = [
     {
       icon: Lightbulb,
-      title: '2007 - O Início',
-      text: 'No ano de 2007, nasceu o Ação Saúde, fruto de um sonho do Dr. Abinadabe Pires, um médico ainda jovem, um universitário inconformado com a gigantesca desigualdade social em nosso país.'
+      title: "2007 - O inicio",
+      text: "O projeto nasceu do sonho do Dr. Abinadabe Pires ao ver a desigualdade no acesso a saude.",
     },
     {
       icon: HeartPulse,
-      title: 'O Programa Ação Saúde',
-      text: 'Idealizou e iniciou o Programa Ação Saúde, com o objetivo inicial de levar atendimento médico à população sem condições de acesso à saúde básica.'
+      title: "Programa Acao Saude",
+      text: "A primeira missao foi levar atendimento medico para quem nao tinha acesso ao basico.",
     },
     {
       icon: Expand,
-      title: 'Expansão',
-      text: 'De um simples projeto de atendimento médico, crescemos para uma organização que oferece saúde integral - física, mental, espiritual e social.'
+      title: "Expansao",
+      text: "Crescemos para um modelo de saude integral: fisica, mental, espiritual e social.",
     },
     {
       icon: Globe,
-      title: 'Hoje',
-      text: 'Atualmente, o Instituto Ação Saúde Internacional atua em múltiplas frentes, impactando milhares de vidas através de nossos programas e ações comunitárias.'
-    }
+      title: "Hoje",
+      text: "Atuamos em varias frentes e seguimos ampliando impacto com acoes comunitarias.",
+    },
   ];
 
   return (
-    <div className="mt-20 rounded-3xl bg-white/70 border border-slate-200 p-8 md:p-12 shadow-sm">
-      <h3 className="section-title text-center mb-12">
-        Nossa História
-      </h3>
-      <div className="relative">
-        {timelineItems.map((item, index) => {
-          const Icon = item.icon;
+    <section className="pb-8 md:pb-12">
+      <div className="site-container">
+        <div className="surface-card-strong rounded-3xl p-6 md:p-10">
+          <h3 className="section-title mb-8 text-center">Nossa Historia</h3>
 
-          return (
-            <div
-              key={item.title}
-              className={`timeline-item relative pl-16 ${index < timelineItems.length - 1 ? 'pb-10' : ''}`}
-            >
-              <div className="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-[#ff7415] to-[#ff934d] text-white shadow-md">
-                <Icon size={20} />
-              </div>
-              <h4 className="text-xl font-bold text-slate-800 mb-2">
-                {item.title}
-              </h4>
-              <p className="text-slate-600">
-                {item.text}
-              </p>
-            </div>
-          );
-        })}
+          <div>
+            {timelineItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <article
+                  key={item.title}
+                  className={`timeline-item relative pl-14 ${
+                    index < timelineItems.length - 1 ? "pb-8" : ""
+                  }`}
+                >
+                  <div className="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff7415] to-[#ff934d] text-white shadow-md">
+                    <Icon size={20} />
+                  </div>
+                  <h4 className="mb-2 text-lg font-bold text-slate-900 md:text-xl">
+                    {item.title}
+                  </h4>
+                  <p className="text-slate-600">{item.text}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

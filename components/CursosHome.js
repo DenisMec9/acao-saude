@@ -1,96 +1,89 @@
-// components/CursosHome.js
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, BadgeDollarSign, Clock3 } from 'lucide-react';
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, BadgeDollarSign, Clock3 } from "lucide-react";
 
 export default function CursosHome({ cursos }) {
-  // Mostra apenas cursos ativos com vagas disponíveis
-  const cursosAtivos = cursos.filter(curso => curso.vagasDisponiveis > 0);
+  const cursosAtivos = cursos.filter((curso) => curso.vagasDisponiveis > 0);
 
   if (cursosAtivos.length === 0) {
-    return null; // Não mostra a seção se não há cursos
+    return null;
   }
 
   return (
-    <section id="cursos" className="py-16">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-        <div className="text-center mb-12">
-          <h2 className="section-title mb-4">
-            Nossos Cursos
-          </h2>
+    <section id="cursos" className="py-16 md:py-20">
+      <div className="site-container">
+        <div className="mb-12 text-center">
+          <h2 className="section-title mb-4">Nossos Cursos</h2>
           <div className="section-divider mb-5" />
           <p className="section-subtitle">
-            Capacitação profissional e oportunidades de desenvolvimento
+            Capacitacao profissional para gerar renda e autonomia.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {cursosAtivos.slice(0, 3).map((curso) => (
-            <div
+            <article
               key={curso.id}
-              className="surface-card rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 curso-card"
+              className="surface-card-strong curso-card overflow-hidden rounded-2xl"
             >
-              {curso.imagem && (
+              {curso.imagem ? (
                 <div className="relative h-48">
-                  <Image
-                    src={curso.imagem}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={curso.imagem} alt={curso.titulo} fill className="object-cover" />
                 </div>
-              )}
-              
+              ) : null}
+
               <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-slate-900">
-                    {curso.titulo}
-                  </h3>
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                <div className="mb-3 flex items-start justify-between gap-2">
+                  <h3 className="text-xl font-bold text-slate-900">{curso.titulo}</h3>
+                  <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
                     {curso.vagasDisponiveis} vagas
                   </span>
                 </div>
 
-                {curso.descricao && (
-                  <p className="text-slate-600 mb-4 line-clamp-2">
-                    {curso.descricao}
-                  </p>
-                )}
+                {curso.descricao ? (
+                  <p className="mb-4 text-slate-600 line-clamp-2">{curso.descricao}</p>
+                ) : null}
 
-                <div className="space-y-2 mb-4 text-sm text-slate-600">
-                  {curso.duracao && (
-                    <div className="flex justify-between items-center gap-2">
-                      <span className="inline-flex items-center gap-2"><Clock3 size={15} /> Duração</span>
+                <div className="mb-5 space-y-2 text-sm text-slate-600">
+                  {curso.duracao ? (
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="inline-flex items-center gap-2">
+                        <Clock3 size={15} /> Duracao
+                      </span>
                       <span className="font-semibold">{curso.duracao}</span>
                     </div>
-                  )}
-                  <div className="flex justify-between items-center gap-2">
-                    <span className="inline-flex items-center gap-2"><BadgeDollarSign size={15} /> Investimento</span>
+                  ) : null}
+
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-2">
+                      <BadgeDollarSign size={15} /> Investimento
+                    </span>
                     <span className="font-bold text-[#053980]">
-                      {curso.investimento === 0 ? 'Gratuito' : `R$ ${curso.investimento.toFixed(2)}`}
+                      {curso.investimento === 0
+                        ? "Gratuito"
+                        : `R$ ${curso.investimento.toFixed(2)}`}
                     </span>
                   </div>
                 </div>
 
-                {/* BOTÃO ALTERADO: Agora leva para a página de cursos */}
-                <Link href="/cursos" className="block">
-                  <button className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors">
-                    Saiba Mais
-                    <ArrowRight size={15} />
-                  </button>
+                <Link
+                  href="/cursos"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ff7415] px-4 py-3 font-semibold text-white transition hover:bg-[#e5670d]"
+                >
+                  Saiba mais
+                  <ArrowRight size={15} />
                 </Link>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* Link para ver todos os cursos */}
         <div className="text-center">
-          <Link 
-            href="/cursos" 
-            className="inline-flex items-center gap-2 bg-[#053980] text-white px-8 py-3 rounded-xl hover:bg-[#032a5f] transition font-semibold"
+          <Link
+            href="/cursos"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#053980] px-8 py-3 font-semibold text-white transition hover:bg-[#032a5f]"
           >
-            Ver Todos os Cursos ({cursosAtivos.length})
+            Ver todos os cursos ({cursosAtivos.length})
             <ArrowRight size={16} />
           </Link>
         </div>

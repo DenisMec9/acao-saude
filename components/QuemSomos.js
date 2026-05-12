@@ -1,78 +1,69 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function QuemSomos() {
+  const pilares = [
+    {
+      title: "Cuidado humano",
+      text: "Acolhimento e escuta ativa em cada atendimento.",
+    },
+    {
+      title: "Fe e dignidade",
+      text: "Respeito as pessoas, culturas e historias de vida.",
+    },
+    {
+      title: "Impacto social",
+      text: "Projetos que geram transformacao continua na comunidade.",
+    },
+    {
+      title: "Transparencia",
+      text: "Etica e responsabilidade na gestao de cada acao.",
+    },
+  ];
+
   return (
-    <section id="quem-somos" className="py-20 bg-white/70">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-        {/* Titulo */}
-        <div className="text-center mb-16">
+    <section id="quem-somos" className="py-16 md:py-20">
+      <div className="site-container">
+        <div className="mb-12 text-center">
           <h2 className="section-title mb-4">Quem Somos</h2>
           <div className="section-divider" />
         </div>
 
-        <div className="md:flex items-center gap-10">
-          {/* Imagem */}
-          <div className="md:w-1/2 mb-10 md:mb-0">
+        <div className="grid items-center gap-8 md:grid-cols-2 md:gap-10">
+          <div className="surface-card-strong overflow-hidden rounded-3xl p-2">
             <Image
               src="/imagens/foto.oq.jpg"
               alt="Medico atendendo paciente"
               width={1280}
               height={853}
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="rounded-2xl shadow-xl w-full border border-slate-200"
+              className="h-[320px] w-full rounded-[1.2rem] border border-slate-100 object-cover md:h-[460px]"
             />
           </div>
 
-          {/* Texto */}
-          <div className="md:w-1/2">
-            <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-              O <span className="font-semibold text-[#053980]">Instituto Ação Saúde</span> é uma
-              organização sem fins lucrativos comprometida em ampliar o acesso à saúde de forma
-              integral, com atuação baseada em valores humanos e impacto social real.
+          <div>
+            <p className="mb-6 text-base leading-relaxed text-slate-700 md:text-lg">
+              O <span className="font-semibold text-[#053980]">Instituto Acao Saude</span> e
+              uma organizacao sem fins lucrativos que promove acesso a saude de
+              forma integral, com foco em pessoas e resultado real.
             </p>
 
-            <ul className="space-y-4">
-              <li className="surface-card rounded-xl p-4 border-l-4 border-[#053980]">
-                <p className="text-[#053980] font-medium">Acreditamos no poder transformador do amor.</p>
-                <p className="text-slate-600">Nossas ações colocam as pessoas no centro de cada decisão.</p>
-              </li>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {pilares.map((item) => (
+                <article
+                  key={item.title}
+                  className="surface-card rounded-2xl border-l-4 border-[#ff7415] p-4"
+                >
+                  <h3 className="mb-1 text-sm font-bold text-[#053980] md:text-base">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-slate-600">{item.text}</p>
+                </article>
+              ))}
+            </div>
 
-              <li className="surface-card rounded-xl p-4 border-l-4 border-[#ff7415]">
-                <p className="text-[#ff7415] font-medium">Valorizamos a força do afeto.</p>
-                <p className="text-slate-600">Cuidado, acolhimento e escuta ativa fazem parte do nosso método.</p>
-              </li>
-
-              <li className="surface-card rounded-xl p-4 border-l-4 border-[#053980]">
-                <p className="text-[#053980] font-medium">Cremos na imensidão da fé.</p>
-                <p className="text-slate-600">
-                  Respeitamos crenças e culturas, promovendo dignidade e esperança.
-                </p>
-              </li>
-
-              <li className="surface-card rounded-xl p-4 border-l-4 border-[#ff7415]">
-                <p className="text-[#ff7415] font-medium">Defendemos o respeito ao ser humano.</p>
-                <p className="text-slate-600">Ética e transparência orientam nossos projetos e parcerias.</p>
-              </li>
-
-              <li className="surface-card rounded-xl p-4 border-l-4 border-[#053980]">
-                <p className="text-[#053980] font-medium">Promovemos engajamento cívico.</p>
-                <p className="text-slate-600">
-                  Conectamos voluntários, comunidades e instituições para gerar transformações
-                  consistentes.
-                </p>
-              </li>
-
-              <li className="surface-card rounded-xl p-4 border-l-4 border-[#ff7415]">
-                <p className="text-[#ff7415] font-medium">Levamos saúde integral a quem precisa.</p>
-                <p className="text-slate-600">
-                  Acesso, prevenção e educação em saúde para ampliar qualidade de vida.
-                </p>
-              </li>
-            </ul>
-
-            <div className="mt-8 bg-[#ff7415]/10 border-l-4 border-[#ff7415] p-4 rounded-xl">
-              <p className="text-[#053980] font-medium italic">
-                "Eu faço o bem." - nosso lema e a razão de cada voluntário estar aqui.
+            <div className="mt-6 rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3">
+              <p className="font-medium italic text-[#053980]">
+                "Eu faco o bem" e o compromisso diario dos nossos voluntarios.
               </p>
             </div>
           </div>

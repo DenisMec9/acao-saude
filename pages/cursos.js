@@ -1,8 +1,9 @@
-// pages/cursos.js
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import Parse from "../lib/parseConfig";
-import Navbar from "../components/Navbar";
-import CursosUnifiedSection from "../components/cursos/CursosUnifiedSection";
+import PremiumNavbar from "../components/ui/PremiumNavbar";
+import PremiumFooter from "../components/ui/PremiumFooter";
+import CoursesSection from "../components/home/CoursesSection";
 
 export default function CursosPage() {
   const [cursos, setCursos] = useState([]);
@@ -16,8 +17,8 @@ export default function CursosPage() {
         query.equalTo("ativo", true);
         query.ascending("ordem");
         const results = await query.find();
-        
-        const cursosData = results.map(item => ({
+
+        const cursosData = results.map((item) => ({
           id: item.id,
           titulo: item.get("titulo") || "",
           descricao: item.get("descricao") || "",
@@ -27,11 +28,11 @@ export default function CursosPage() {
           dataInicio: item.get("dataInicio")?.toISOString() || "",
           dataFim: item.get("dataFim")?.toISOString() || "",
           local: item.get("local") || "",
-          duracao: item.get("duração") || "",
+          duracao: item.get("duracao") || item.get("duração") || "",
           requisitos: item.get("requisitos") || [],
           investimento: item.get("investimento") || 0,
         }));
-        
+
         setCursos(cursosData);
       } catch (err) {
         console.error("Erro ao buscar cursos:", err);
@@ -44,18 +45,28 @@ export default function CursosPage() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
+    <>
+      <Head>
+        <title>Cursos | Acao Saude</title>
+        <meta
+          name="description"
+          content="Cursos com proposito da Acao Saude para formacao profissional e desenvolvimento social."
+        />
+      </Head>
 
-      <main className="pt-20 pb-12">
-        <CursosUnifiedSection
+      <PremiumNavbar />
+
+      <main className="min-h-screen pt-8 md:pt-10">
+        <CoursesSection
           cursos={cursos}
           loading={loading}
-          showBottomCta
-          title="Cursos com propósito"
-          subtitle="Capacitação profissional para gerar renda, autonomia e transformação social real."
+          sectionId="cursos-lista"
+          title="Cursos com proposito"
+          subtitle="Formacao profissional para gerar renda, autonomia e transformacao social real."
         />
       </main>
-    </div>
+
+      <PremiumFooter />
+    </>
   );
 }

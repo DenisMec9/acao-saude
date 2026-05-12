@@ -1,24 +1,20 @@
-// pages/index.js
-import Head from 'next/head';
-import Parse from '../lib/parseConfig';
+import Head from "next/head";
+import Parse from "../lib/parseConfig";
+import PremiumNavbar from "../components/ui/PremiumNavbar";
+import PremiumFooter from "../components/ui/PremiumFooter";
+import HeroSection from "../components/home/HeroSection";
+import AboutSection from "../components/institucional/AboutSection";
+import AreasGrid from "../components/institucional/AreasGrid";
+import CoursesSection from "../components/home/CoursesSection";
+import GalleryGrid from "../components/home/GalleryGrid";
+import DonationSection from "../components/institucional/DonationSection";
 
-// Seus componentes
-import Navbar from '../components/Navbar';
-import HeroSection from '../components/HeroSection';
-import QuemSomos from '../components/QuemSomos';
-import NossaHistoria from '../components/NossaHistoria';
-import AreasAtuacao from '../components/AreasAtuacao';
-import Galeria from '../components/Galeria';
-import DoacaoContatoFooter from '../components/DoacaoContatoFooter';
-import CursosHome from '../components/CursosHome';
-
-// PARTE 1: O COMPONENTE DA PAGINA
 export default function Home({ heroData, galeriaData, cursosData }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.acaosaude.org.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.acaosaude.org.br";
   const pageUrl = `${siteUrl}/`;
-  const seoTitle = 'Acao Saude - Eu Faco o Bem';
+  const seoTitle = "Acao Saude - Eu Faco o Bem";
   const seoDescription =
-    'A Acao Saude fortalece comunidades com projetos sociais, acoes de saude e oportunidades de formacao.';
+    "A Acao Saude fortalece comunidades com projetos sociais, cuidado integral e oportunidades de formacao.";
 
   return (
     <>
@@ -35,76 +31,65 @@ export default function Home({ heroData, galeriaData, cursosData }) {
         <meta property="og:type" content="website" key="og:type" />
         <meta name="twitter:title" content={seoTitle} key="twitter:title" />
         <meta name="twitter:description" content={seoDescription} key="twitter:description" />
-        <link rel="icon" href="/coracao-laranja.png" type="image/png" />
       </Head>
 
-      <Navbar />
-
+      <PremiumNavbar />
       <HeroSection heroData={heroData} />
-      <QuemSomos />
-      <NossaHistoria />
-      <AreasAtuacao />
-
-      {/* NOVA SECAO: CURSOS NA PAGINA PRINCIPAL */}
-      <CursosHome cursos={cursosData} />
-
-      <Galeria images={galeriaData} />
-      <DoacaoContatoFooter />
+      <AboutSection />
+      <AreasGrid />
+      <CoursesSection cursos={cursosData} limit={3} compact />
+      <GalleryGrid images={galeriaData} mode="preview" title="Nossa Galeria" />
+      <DonationSection />
+      <PremiumFooter />
     </>
   );
 }
 
-// PARTE 2: FUNCAO DE BUSCA DE DADOS
 export async function getStaticProps() {
   try {
-    // Busca dados para a Hero Section
-    const HeroContent = Parse.Object.extend('HeroContent');
+    const HeroContent = Parse.Object.extend("HeroContent");
     const heroQuery = new Parse.Query(HeroContent);
     const heroObj = await heroQuery.first();
     const heroData = heroObj
       ? {
-          titulo: heroObj.get('titulo') || null,
-          subtitulo: heroObj.get('subtitulo') || null,
-          descricao: heroObj.get('descricao') || null,
-          imagemUrl: heroObj.get('imagem')?.url() || null,
+          titulo: heroObj.get("titulo") || null,
+          subtitulo: heroObj.get("subtitulo") || null,
+          descricao: heroObj.get("descricao") || null,
+          imagemUrl: heroObj.get("imagem")?.url() || null,
         }
       : null;
 
-    // Busca dados para a Galeria
-    const GaleriaItem = Parse.Object.extend('Galeria');
+    const GaleriaItem = Parse.Object.extend("Galeria");
     const galeriaQuery = new Parse.Query(GaleriaItem);
-    galeriaQuery.descending('createdAt');
+    galeriaQuery.descending("createdAt");
     const galeriaObjs = await galeriaQuery.find();
     const galeriaData = galeriaObjs.map((item) => ({
       id: item.id,
-      url: item.get('imagem')?.url() || '',
-      title: item.get('titulo') || '',
-      description: item.get('descricao') || '',
+      url: item.get("imagem")?.url() || "",
+      title: item.get("titulo") || "",
+      description: item.get("descricao") || "",
     }));
 
-    // BUSCA DADOS PARA CURSOS (NOVO)
-    const CursosItem = Parse.Object.extend('Cursos');
+    const CursosItem = Parse.Object.extend("Cursos");
     const cursosQuery = new Parse.Query(CursosItem);
-    cursosQuery.equalTo('ativo', true);
-    cursosQuery.ascending('ordem');
-    cursosQuery.limit(3); // Mostra apenas 3 cursos na pagina inicial
+    cursosQuery.equalTo("ativo", true);
+    cursosQuery.ascending("ordem");
     const cursosObjs = await cursosQuery.find();
     const cursosData = cursosObjs.map((item) => ({
       id: item.id,
-      titulo: item.get('titulo') || '',
-      descricao: item.get('descricao') || '',
-      imagem: item.get('imagem')?.url() || '',
-      vagas: item.get('vagas') || 0,
-      vagasDisponiveis: item.get('vagasDisponiveis') || 0,
-      dataInicio: item.get('dataInicio')?.toISOString() || '',
-      dataFim: item.get('dataFim')?.toISOString() || '',
-      local: item.get('local') || '',
-      duracao: item.get('duracao') || '',
-      requisitos: item.get('requisitos') || [],
-      investimento: item.get('investimento') || 0,
+      titulo: item.get("titulo") || "",
+      descricao: item.get("descricao") || "",
+      imagem: item.get("imagem")?.url() || "",
+      vagas: item.get("vagas") || 0,
+      vagasDisponiveis: item.get("vagasDisponiveis") || 0,
+      dataInicio: item.get("dataInicio")?.toISOString() || "",
+      dataFim: item.get("dataFim")?.toISOString() || "",
+      local: item.get("local") || "",
+      duracao: item.get("duracao") || item.get("duração") || "",
+      requisitos: item.get("requisitos") || [],
+      investimento: item.get("investimento") || 0,
     }));
 
-    // Retorna os dados encontrados como props para o componente Home
     return {
       props: {
         heroData,
@@ -114,13 +99,14 @@ export async function getStaticProps() {
       revalidate: 60,
     };
   } catch (error) {
-    console.error('Erro ao buscar dados no getStaticProps:', error);
+    console.error("Erro ao buscar dados no getStaticProps:", error);
     return {
       props: {
         heroData: null,
         galeriaData: [],
         cursosData: [],
       },
+      revalidate: 60,
     };
   }
 }

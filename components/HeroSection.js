@@ -1,51 +1,50 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function HeroSection({ heroData }) {
   const imagemUrl = heroData?.imagemUrl || null;
 
   return (
-    <section className="hero-gradient text-white relative overflow-hidden">
-      <div className="absolute -top-24 -left-10 h-60 w-60 rounded-full bg-orange-300/20 blur-3xl" />
-      <div
-        className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-blue-200/20 blur-3xl"
-        aria-hidden="true"
-      />
+    <section className="hero-gradient relative overflow-hidden text-white">
+      <div className="absolute -left-16 top-14 h-64 w-64 rounded-full bg-orange-300/20 blur-3xl" />
+      <div className="absolute -right-14 bottom-10 h-72 w-72 rounded-full bg-blue-200/20 blur-3xl" />
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-20 md:py-28 relative">
-        <div className="flex flex-col md:flex-row items-center md:space-x-10">
-          {/* LADO ESQUERDO - TEXTO FIXO */}
-          <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
-            <span className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold mb-6">
-              Saúde integral com impacto real
+      <div className="site-container relative py-14 md:py-20">
+        <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12">
+          <div className="text-center md:text-left">
+            <span className="mb-6 inline-flex items-center rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold">
+              Saude integral com impacto real
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-              Ação Saúde
+
+            <h1 className="mb-6 text-4xl font-extrabold leading-tight md:text-6xl">
+              Acao Saude
               <br />
-              <span className="text-[#ffd1a8]">Eu faço o bem</span>
+              <span className="text-[#ffd1a8]">Eu faco o bem</span>
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-blue-100 max-w-xl">
-              Levar acesso à saúde integralmente a quem precisa é nossa missão.
+
+            <p className="mx-auto mb-8 max-w-xl text-base text-blue-100 md:mx-0 md:text-xl">
+              Levamos acesso a saude com acolhimento, projetos sociais e
+              formacao para fortalecer comunidades.
             </p>
 
-            <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
               <a
                 href="#doacao"
-                className="bg-white text-[#053980] px-6 py-3.5 rounded-xl font-bold text-center hover:bg-gray-100 hover:-translate-y-0.5 transition duration-300"
+                className="rounded-xl bg-white px-6 py-3.5 text-center font-bold text-[#053980] transition duration-300 hover:-translate-y-0.5 hover:bg-slate-100"
               >
-                Faça uma doação
+                Fazer doacao
               </a>
               <a
                 href="#atuacao"
-                className="border-2 border-white/70 text-white px-6 py-3.5 rounded-xl font-bold text-center hover:bg-white/15 transition duration-300"
+                className="rounded-xl border-2 border-white/70 px-6 py-3.5 text-center font-bold text-white transition duration-300 hover:bg-white/15"
               >
-                Conheça nossas ações
+                Ver nossas acoes
               </a>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-3 max-w-xl">
+            <div className="mt-8 grid grid-cols-3 gap-3">
               <div className="surface-card rounded-xl p-3 text-left">
                 <p className="text-xl font-extrabold text-[#053980]">+18</p>
-                <p className="text-xs text-slate-600">Anos de história</p>
+                <p className="text-xs text-slate-600">Anos de historia</p>
               </div>
               <div className="surface-card rounded-xl p-3 text-left">
                 <p className="text-xl font-extrabold text-[#053980]">+10k</p>
@@ -53,27 +52,28 @@ export default function HeroSection({ heroData }) {
               </div>
               <div className="surface-card rounded-xl p-3 text-left">
                 <p className="text-xl font-extrabold text-[#053980]">+100</p>
-                <p className="text-xs text-slate-600">Ações realizadas</p>
+                <p className="text-xs text-slate-600">Acoes realizadas</p>
               </div>
             </div>
           </div>
 
-          {/* LADO DIREITO - IMAGEM DINAMICA */}
-          <div className="md:w-1/2 flex justify-center">
+          <div className="flex justify-center md:justify-end">
             {imagemUrl ? (
-              <Image
-                src={imagemUrl}
-                alt="Imagem principal da Ação Saúde"
-                width={768}
-                height={960}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                loading="eager"
-                fetchPriority="high"
-                className="rounded-2xl border border-white/25 shadow-2xl max-w-md w-full object-cover"
-              />
+              <div className="surface-card-strong w-full max-w-md rounded-[1.8rem] p-2">
+                <Image
+                  src={imagemUrl}
+                  alt="Imagem principal da Acao Saude"
+                  width={768}
+                  height={960}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                  loading="eager"
+                  fetchPriority="high"
+                  className="h-[460px] w-full rounded-[1.3rem] object-cover md:h-[540px]"
+                />
+              </div>
             ) : (
-              <div className="h-[360px] md:h-[420px] w-full max-w-md rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white/70">
+              <div className="flex h-[360px] w-full max-w-md items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white/70">
                 Imagem nao disponivel
               </div>
             )}
